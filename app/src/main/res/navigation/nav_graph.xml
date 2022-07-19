@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/tutorialFragment">
+
+    <fragment
+        android:id="@+id/tutorialFragment"
+        android:name="kz.home.walletapp.presentation.tutorial.TutorialFragment"
+        android:label="TutorialFragment" >
+        <action
+            android:id="@+id/action_tutorialFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="kz.home.walletapp.presentation.login.LoginFragment"
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_accountsFragment"
+            app:destination="@id/accountsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registrationFragment"
+        android:name="kz.home.walletapp.presentation.login.RegistrationFragment"
+        android:label="RegistrationFragment" >
+        <action
+            android:id="@+id/action_registrationFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/accountsFragment"
+        android:name="kz.home.walletapp.presentation.accounts.AccountsFragment"
+        android:label="AccountsFragment" />
+    <fragment
+        android:id="@+id/transactionsFragment"
+        android:name="kz.home.walletapp.presentation.transactions.TransactionsFragment"
+        android:label="TransactionsFragment" />
+    <fragment
+        android:id="@+id/analyticsFragment"
+        android:name="kz.home.walletapp.presentation.analytics.AnalyticsFragment"
+        android:label="AnalyticsFragment" />
+    <fragment
+        android:id="@+id/moreFragment"
+        android:name="kz.home.walletapp.presentation.MoreFragment"
+        android:label="MoreFragment" />
+</navigation>
