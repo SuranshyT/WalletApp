@@ -2,11 +2,9 @@ package kz.home.walletapp.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kz.home.walletapp.R
@@ -24,9 +22,10 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination: NavDestination, _ ->
             when (destination.id) {
-                R.id.tutorialFragment -> bottomNavigationView.visibility = View.GONE
+                R.id.welcomeFragment -> bottomNavigationView.visibility = View.GONE
                 R.id.loginFragment -> bottomNavigationView.visibility = View.GONE
                 R.id.registrationFragment -> bottomNavigationView.visibility = View.GONE
+                R.id.tutorialFragment -> bottomNavigationView.visibility = View.GONE
                 else -> bottomNavigationView.visibility = View.VISIBLE
             }
         }

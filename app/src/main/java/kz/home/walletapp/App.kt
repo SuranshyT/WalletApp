@@ -1,4 +1,4 @@
-package kz.home.walletapp.presentation
+package kz.home.walletapp
 
 import android.app.Application
 import org.koin.core.context.GlobalContext
