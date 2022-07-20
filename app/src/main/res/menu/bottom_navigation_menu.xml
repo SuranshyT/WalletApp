@@ -3,21 +3,21 @@
     <item
         android:id="@+id/accountsFragment"
         android:enabled="true"
-        android:icon="@android:drawable/ic_search_category_default"
+        android:icon="@drawable/accounts_icon"
         android:title="Accounts" />
     <item
         android:id="@+id/transactionsFragment"
         android:enabled="true"
-        android:icon="@android:drawable/ic_search_category_default"
+        android:icon="@drawable/transactions_icon"
         android:title="Transactions" />
     <item
         android:id="@+id/analyticsFragment"
         android:enabled="true"
-        android:icon="@android:drawable/ic_search_category_default"
+        android:icon="@drawable/analytics_icon"
         android:title="Analytics" />
     <item
         android:id="@+id/moreFragment"
         android:enabled="true"
-        android:icon="@android:drawable/ic_search_category_default"
+        android:icon="@drawable/more_icon"
         android:title="More" />
 </menu>

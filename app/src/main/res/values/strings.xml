@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Mobile Wallet</string>
+    <string name="registration_title">Registration</string>
+    <string name="login_info">Create an account, save all your \n expenses in one secure place!</string>
+    <string name="e_mail_title">E-mail</string>
+    <string name="email_hint">sample@email.com</string>
+    <string name="password_title">Password</string>
+    <string name="password_hint">************</string>
+    <string name="repeat_password_title">Repeat password</string>
+    <string name="register_button">Register</string>
+    <string name="terms_and_privacy">By continuing you are indicating that you agree to the Terms and Privacy Policy.</string>
+    <string name="no_account_registration_link">No account? Registration</string>
+    <string name="login_title">Login</string>
 </resources>

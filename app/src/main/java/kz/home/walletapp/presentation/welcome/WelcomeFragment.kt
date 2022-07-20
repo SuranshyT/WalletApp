@@ -3,6 +3,8 @@ package kz.home.walletapp.presentation.welcome
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import kz.home.walletapp.R

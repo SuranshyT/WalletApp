@@ -3,6 +3,7 @@ package kz.home.walletapp.presentation.tutorial
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.viewpager2.widget.ViewPager2
