@@ -51,7 +51,7 @@
         android:label="AnalyticsFragment" />
     <fragment
         android:id="@+id/moreFragment"
-        android:name="kz.home.walletapp.presentation.MoreFragment"
+        android:name="kz.home.walletapp.presentation.more.MoreFragment"
         android:label="MoreFragment" />
     <fragment
         android:id="@+id/tutorialFragment"

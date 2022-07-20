@@ -5,6 +5,8 @@ import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
 import android.widget.TextView
+import java.util.*
+import kotlin.collections.ArrayList
 
 fun TextView.link(vararg links: Pair<String, View.OnClickListener>) {
     val spannableString = SpannableString(this.text)
@@ -30,4 +32,19 @@ fun TextView.link(vararg links: Pair<String, View.OnClickListener>) {
     this.movementMethod =
         LinkMovementMethod.getInstance()
     this.setText(spannableString, TextView.BufferType.SPANNABLE)
+}
+
+fun randomID(): Int {
+    val numbers: MutableList<Int> = mutableListOf()
+    for (i in 0..9) {
+        numbers.add(i)
+    }
+
+    numbers.shuffle()
+
+    var result = ""
+    for (i in 0..3) {
+        result += numbers[i].toString()
+    }
+    return result.toInt()
 }

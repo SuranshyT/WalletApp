@@ -1,4 +1,4 @@
-package kz.home.walletapp.presentation
+package kz.home.walletapp.presentation.more
 
 import android.os.Bundle
 import android.util.Log
