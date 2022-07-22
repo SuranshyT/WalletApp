@@ -17,6 +17,9 @@
         <entry key="..\:/Users/tomir/WalletApp/app/src/main/res/layout/fragment_transactions.xml" value="0.2259963768115942" />
         <entry key="..\:/Users/tomir/WalletApp/app/src/main/res/layout/fragment_tutorial.xml" value="0.2259963768115942" />
         <entry key="..\:/Users/tomir/WalletApp/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.25416666666666665" />
+        <entry key="app/src/main/res/layout/fragment_accounts.xml" value="0.1816123188405797" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/fragment_registration.xml" value="0.33" />
       </map>
     </option>
   </component>
