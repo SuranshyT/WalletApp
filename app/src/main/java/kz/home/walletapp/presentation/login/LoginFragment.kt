@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -19,16 +20,19 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.android.material.textfield.TextInputEditText
+import kotlinx.coroutines.launch
 import kz.home.walletapp.R
 import kz.home.walletapp.utils.link
-
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
+    private val viewModel: AuthViewModel by sharedViewModel()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val login = view.findViewById<TextInputEditText>(R.id.login_input)
-        val password = view.findViewById<TextInputEditText>(R.id.password_input)
+        val emailInput = view.findViewById<TextInputEditText>(R.id.login_input)
+        val passwordInput = view.findViewById<TextInputEditText>(R.id.password_input)
         val loginButton = view.findViewById<Button>(R.id.loginButton)
         val registerLink = view.findViewById<TextView>(R.id.registerLink)
         val terms = view.findViewById<TextView>(R.id.termsAndPrivacy)
@@ -52,15 +56,26 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         //updateUI(account)
 
 
-
         loginButton.setOnClickListener {
-            /*if(login.text.toString().isNotBlank() && password.text.toString().isNotBlank()) {
-                login.error = null*/
+            if(emailInput.text.toString().isNotBlank() && passwordInput.text.toString().isNotBlank()) {
+                emailInput.error = null
+                val email = emailInput.text.toString().trim()
+                val password = passwordInput.text.toString().trim()
 
-                Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_accountsFragment)
-            /*}else{
-                login.error = "No login or password"
-            }*/
+                lifecycleScope.launch {
+                    viewModel.loginUser(email, password).collect {
+                        if (it != null) {
+                            Navigation.findNavController(view)
+                                .navigate(R.id.action_loginFragment_to_accountsFragment)
+                        } else {
+                            Toast.makeText(requireActivity(), "No such user", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+
+            }else{
+                emailInput.error = "No login or password"
+            }
         }
 
         registerLink.setOnClickListener {

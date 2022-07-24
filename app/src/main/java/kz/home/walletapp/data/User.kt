@@ -8,21 +8,16 @@ import kz.home.walletapp.data.User.Companion.TABLE_NAME
 @Entity(tableName = TABLE_NAME)
 data class User(
     @PrimaryKey
-    @ColumnInfo(name = COLUMN_USER_ID)
-    val userId: Int,
-
     @ColumnInfo(name = COLUMN_EMAIL)
-    val email: String?,
+    val email: String,
 
     @ColumnInfo(name = COLUMN_PASSWORD)
-    val password: String? = null,
-
+    val password: String
 ) {
 
     override fun toString(): String =
         """
             User(
-                id=$userId,
                 firstName=$email,
                 lastName=$password
             )
@@ -30,8 +25,7 @@ data class User(
 
     companion object {
         const val TABLE_NAME = "users"
-        const val COLUMN_USER_ID = "person_id"
-        const val COLUMN_EMAIL = "first_name"
-        const val COLUMN_PASSWORD = "last_name"
+        const val COLUMN_EMAIL = "email"
+        const val COLUMN_PASSWORD = "password"
     }
 }

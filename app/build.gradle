@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'kotlin-android-extensions'
 }
 
 android {
@@ -47,7 +48,6 @@ dependencies {
     implementation("io.insert-koin:koin-android:3.2.0")
 
     //Navigation
-
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.0'
     implementation 'androidx.navigation:navigation-dynamic-features-fragment:2.5.0'
@@ -69,6 +69,4 @@ dependencies {
 
     //Google Play services
     implementation 'com.google.android.gms:play-services-auth:20.2.0'
-
-
 }

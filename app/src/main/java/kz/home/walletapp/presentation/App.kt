@@ -5,18 +5,14 @@ import kz.home.walletapp.data.MyDatabase
 import org.koin.core.context.GlobalContext
 import kz.home.walletapp.di.modules
 import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 
 class App : Application() {
-
-    lateinit var db: MyDatabase
-        private set
 
     override fun onCreate() {
         super.onCreate()
 
-        db = MyDatabase.getInstance(this)
-
-        GlobalContext.startKoin {
+        startKoin {
             androidContext(this@App)
             modules(modules)
         }
