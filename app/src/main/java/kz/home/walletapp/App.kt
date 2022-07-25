@@ -1,4 +1,4 @@
-package kz.home.walletapp.presentation
+package kz.home.walletapp
 
 import android.app.Application
 import kz.home.walletapp.data.MyDatabase
