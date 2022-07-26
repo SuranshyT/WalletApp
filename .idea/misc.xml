@@ -6,17 +6,9 @@
         <entry key="..\:/Users/tomir/WalletApp/app/src/main/res/drawable/background.xml" value="0.1365" />
         <entry key="..\:/Users/tomir/WalletApp/app/src/main/res/drawable/button_background.xml" value="0.197" />
         <entry key="..\:/Users/tomir/WalletApp/app/src/main/res/drawable/cloud.xml" value="0.1365" />
-        <entry key="..\:/Users/tomir/WalletApp/app/src/main/res/drawable/default_shape_ios_tab.xml" value="0.197" />
-        <entry key="..\:/Users/tomir/WalletApp/app/src/main/res/drawable/ios_tab_background_shape.xml" value="0.197" />
-        <entry key="..\:/Users/tomir/WalletApp/app/src/main/res/drawable/ios_tab_selector.xml" value="0.197" />
-        <entry key="..\:/Users/tomir/WalletApp/app/src/main/res/drawable/ios_tab_text_selector.xml" value="0.197" />
-        <entry key="..\:/Users/tomir/WalletApp/app/src/main/res/drawable/selected_dot.xml" value="0.197" />
-        <entry key="..\:/Users/tomir/WalletApp/app/src/main/res/drawable/selected_shape_ios_tab.xml" value="0.197" />
-        <entry key="..\:/Users/tomir/WalletApp/app/src/main/res/drawable/tab_selector.xml" value="0.197" />
         <entry key="..\:/Users/tomir/WalletApp/app/src/main/res/drawable/transparent_rectangle.xml" value="0.1365" />
         <entry key="..\:/Users/tomir/WalletApp/app/src/main/res/layout/activity_main.xml" value="0.2259963768115942" />
-        <entry key="..\:/Users/tomir/WalletApp/app/src/main/res/layout/fragment_accounts.xml" value="0.36153846153846153" />
-        <entry key="..\:/Users/tomir/WalletApp/app/src/main/res/layout/fragment_accounts_slide.xml" value="0.2" />
+        <entry key="..\:/Users/tomir/WalletApp/app/src/main/res/layout/fragment_accounts.xml" value="0.17042349726775957" />
         <entry key="..\:/Users/tomir/WalletApp/app/src/main/res/layout/fragment_analytics.xml" value="0.21891891891891893" />
         <entry key="..\:/Users/tomir/WalletApp/app/src/main/res/layout/fragment_login.xml" value="0.25" />
         <entry key="..\:/Users/tomir/WalletApp/app/src/main/res/layout/fragment_menu.xml" value="0.2259963768115942" />
@@ -24,12 +16,16 @@
         <entry key="..\:/Users/tomir/WalletApp/app/src/main/res/layout/fragment_registration.xml" value="0.2259963768115942" />
         <entry key="..\:/Users/tomir/WalletApp/app/src/main/res/layout/fragment_transactions.xml" value="0.2259963768115942" />
         <entry key="..\:/Users/tomir/WalletApp/app/src/main/res/layout/fragment_tutorial.xml" value="0.2259963768115942" />
-        <entry key="..\:/Users/tomir/WalletApp/app/src/main/res/layout/fragment_tutorial_slide.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/tomir/WalletApp/app/src/main/res/layout/item_accounts.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/tomir/WalletApp/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.25416666666666665" />
         <entry key="app/src/main/res/layout/fragment_accounts.xml" value="0.1816123188405797" />
+        <entry key="app/src/main/res/layout/fragment_accounts_slide.xml" value="0.1802536231884058" />
+        <entry key="app/src/main/res/layout/fragment_choose_bank_bottomsheet.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_registration.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_wallet_type.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/item_accounts.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/item_bank.xml" value="0.75" />
+        <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.18958333333333333" />
       </map>
     </option>
   </component>
