@@ -27,7 +27,7 @@
             app:destination="@id/registrationFragment" />
         <action
             android:id="@+id/action_loginFragment_to_accountsFragment"
-            app:destination="@id/accountsFragment" />
+            app:destination="@id/navigationAccounts" />
     </fragment>
     <fragment
         android:id="@+id/registrationFragment"
@@ -36,15 +36,6 @@
         <action
             android:id="@+id/action_registrationFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/accountsFragment"
-        android:name="kz.home.walletapp.presentation.accounts.AccountsFragment"
-        android:label="AccountsFragment"
-        tools:layout="@layout/fragment_accounts">
-        <action
-            android:id="@+id/action_accountsFragment_to_walletTypeFragment"
-            app:destination="@id/walletTypeFragment" />
     </fragment>
     <fragment
         android:id="@+id/transactionsFragment"
@@ -67,15 +58,6 @@
             android:id="@+id/action_tutorialFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/walletTypeFragment"
-        android:name="kz.home.walletapp.presentation.accounts.WalletTypeFragment"
-        android:label="WalletTypeFragment"
-        tools:layout="@layout/fragment_wallet_type">
-        <action
-            android:id="@+id/action_walletTypeFragment_to_chooseBankBottomSheetFragment2"
-            app:destination="@id/chooseBankBottomSheetFragment2" />
-    </fragment>
 
     <dialog
         android:id="@+id/chooseBankBottomSheetFragment2"
@@ -83,7 +65,28 @@
         android:label="ChooseBankBottomSheetFragment">
         <action
             android:id="@+id/action_chooseBankBottomSheetFragment2_to_accountsFragment"
-            app:destination="@id/accountsFragment" />
+            app:destination="@id/navigationAccounts" />
     </dialog>
+    <navigation android:id="@+id/navigationAccounts"
+        app:startDestination="@id/accountsFragment">
+        <fragment
+            android:id="@+id/walletTypeFragment"
+            android:name="kz.home.walletapp.presentation.accounts.WalletTypeFragment"
+            android:label="WalletTypeFragment"
+            tools:layout="@layout/fragment_wallet_type">
+            <action
+                android:id="@+id/action_walletTypeFragment_to_chooseBankBottomSheetFragment2"
+                app:destination="@id/chooseBankBottomSheetFragment2" />
+        </fragment>
+        <fragment
+            android:id="@+id/accountsFragment"
+            android:name="kz.home.walletapp.presentation.accounts.AccountsFragment"
+            android:label="AccountsFragment"
+            tools:layout="@layout/fragment_accounts">
+            <action
+                android:id="@+id/action_accountsFragment_to_walletTypeFragment"
+                app:destination="@id/walletTypeFragment" />
+        </fragment>
+    </navigation>
 
 </navigation>

@@ -13,10 +13,12 @@ import com.google.android.material.tabs.TabLayoutMediator
 import kz.home.walletapp.R
 import kz.home.walletapp.data.Data
 import kz.home.walletapp.domain.model.Bank
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class AccountsFragment : Fragment(R.layout.fragment_accounts), ChooseBankBottomSheetFragment.BankBottomSheetListener {
+class AccountsFragment : Fragment(R.layout.fragment_accounts) {
 
     lateinit var recyclerViewAdapter: BankAdapter
+    private val viewModel: AccountsViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -39,6 +41,10 @@ class AccountsFragment : Fragment(R.layout.fragment_accounts), ChooseBankBottomS
         addWalletButton.setOnClickListener {
             findNavController().navigate(R.id.action_accountsFragment_to_walletTypeFragment)
         }
+
+        viewModel.accounts.observe(viewLifecycleOwner){
+            recyclerViewAdapter.submitList(it)
+        }
     }
 
     private fun setupRecyclerView(recyclerView: RecyclerView?) {
@@ -50,7 +56,7 @@ class AccountsFragment : Fragment(R.layout.fragment_accounts), ChooseBankBottomS
             layoutManager = recyclerViewManager
         }
 
-        recyclerViewAdapter.submitList(Data.bankList)
+        //recyclerViewAdapter.submitList(Data.bankList)
     }
 
     private fun setupViewPager(
@@ -69,9 +75,5 @@ class AccountsFragment : Fragment(R.layout.fragment_accounts), ChooseBankBottomS
                 else -> tab.text = "Crypto"
             }
         }.attach()
-    }
-
-    override fun addAccountClicked(bank: Bank) {
-        recyclerViewAdapter.submitList(Data.bankList + bank)
     }
 }

@@ -24,7 +24,7 @@ object Data {
     )
 
     val cryptoList = mutableListOf<Bank>(
-        Bank(1, "Ethereum wallet", 100000.0, R.drawable.jusan_logo),
-        Bank(2, "Bitcoin wallet", 50000.0, R.drawable.kaspi_logo)
+        Bank(1, "Ethereum wallet", 80000.0, R.drawable.ethereum_logo),
+        Bank(2, "Bitcoin wallet", 200000.0, R.drawable.bitcoin_logo)
     )
 }
