@@ -157,7 +157,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:imeOptions="actionDone"
-            android:inputType="text"
+            android:inputType="textEmailAddress"
             android:textSize="18sp"
             android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -195,7 +195,7 @@
             android:hint="@string/password_hint"
             android:paddingTop="8dp"
             android:imeOptions="actionDone"
-            android:inputType="text"
+            android:inputType="textPassword"
             android:textSize="18sp"
             android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>

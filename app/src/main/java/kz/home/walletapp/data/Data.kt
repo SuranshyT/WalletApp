@@ -22,4 +22,9 @@ object Data {
         Bank(1, "Jusan Bank", 100000.0, R.drawable.jusan_logo),
         Bank(2, "Kaspi Bank", 50000.0, R.drawable.kaspi_logo)
     )
+
+    val cryptoList = mutableListOf<Bank>(
+        Bank(1, "Ethereum wallet", 80000.0, R.drawable.ethereum_logo),
+        Bank(2, "Bitcoin wallet", 200000.0, R.drawable.bitcoin_logo)
+    )
 }

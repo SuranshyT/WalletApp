@@ -2,7 +2,9 @@ package kz.home.walletapp.presentation.accounts
 
 import android.os.Bundle
 import android.view.View
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -10,8 +12,13 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kz.home.walletapp.R
 import kz.home.walletapp.data.Data
+import kz.home.walletapp.domain.model.Bank
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class AccountsFragment : Fragment(R.layout.fragment_accounts) {
+
+    lateinit var recyclerViewAdapter: BankAdapter
+    private val viewModel: AccountsViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -28,10 +35,20 @@ class AccountsFragment : Fragment(R.layout.fragment_accounts) {
         setupViewPager(viewPager, tabLayout)
 
         setupRecyclerView(recyclerView)
+
+        val addWalletButton = view.findViewById<ConstraintLayout>(R.id.addWalletButton)
+
+        addWalletButton.setOnClickListener {
+            findNavController().navigate(R.id.action_accountsFragment_to_walletTypeFragment)
+        }
+
+        viewModel.accounts.observe(viewLifecycleOwner){
+            recyclerViewAdapter.submitList(it)
+        }
     }
 
     private fun setupRecyclerView(recyclerView: RecyclerView?) {
-        val recyclerViewAdapter = BankAdapter()
+        recyclerViewAdapter = BankAdapter()
         val recyclerViewManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
         recyclerView?.apply {
@@ -39,7 +56,7 @@ class AccountsFragment : Fragment(R.layout.fragment_accounts) {
             layoutManager = recyclerViewManager
         }
 
-        recyclerViewAdapter.submitList(Data.bankList)
+        //recyclerViewAdapter.submitList(Data.bankList)
     }
 
     private fun setupViewPager(
