@@ -1,5 +1,6 @@
 package kz.home.walletapp.presentation.accounts
 
+import android.util.Log
 import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -27,15 +28,22 @@ class AccountsViewModel(
     private lateinit var password: String
     var n = 0
 
-    fun initialize() {
+    fun initialize(e: String, p: String) {
+        email = e
+        password = p
+        //allAccounts.clear()
+        //_accounts.postValue(allAccounts)
+        Log.e("", "1: ${allAccounts.isEmpty()}")
         viewModelScope.launch {
-            getAccounts().collect { list ->
+            getAccounts(e).collect { list ->
                 val x = list?.map {
                     Bank(it.name, it.value, it.img, it.type)
                 }
-                if (x != null && allAccounts.isEmpty()) {
+                if (x != null && allAccounts.isEmpty()
+                ) {
                     allAccounts.addAll(x)
                     _accounts.postValue(allAccounts)
+                    Log.e("", "2: ${allAccounts.isEmpty()}")
 
                     allSums.addAll(calculate())
                     _sums.postValue(allSums)
@@ -83,6 +91,8 @@ class AccountsViewModel(
 
         allSums.addAll(calculate())
         _sums.postValue(allSums)
+
+        saveAccounts()
     }
 
     fun deleteAccount(bank: Bank) {
@@ -91,6 +101,8 @@ class AccountsViewModel(
 
         allSums.addAll(calculate())
         _sums.postValue(allSums)
+
+        saveAccounts()
     }
 
     fun saveAccounts() {
@@ -103,8 +115,8 @@ class AccountsViewModel(
         }
     }
 
-    private fun getAccounts(): Flow<List<Account>?> {
-        return useCase.getAccounts(email).flowOn(Dispatchers.IO)
+    private fun getAccounts(e: String): Flow<List<Account>?> {
+        return useCase.getAccounts(e).flowOn(Dispatchers.IO)
     }
 
     fun getUser(e: String, p: String) {
@@ -117,4 +129,9 @@ class AccountsViewModel(
     }
 
     fun getCount() = n
+
+    fun clear() {
+        allAccounts.clear()
+        //_accounts.postValue(allAccounts)
+    }
 }

@@ -24,6 +24,6 @@ interface UserDao {
         insertUser(user)
     }
 
-    @Query("SELECT * FROM ${TABLE_NAME} WHERE email =:email")
+    @Query("SELECT * FROM $TABLE_NAME WHERE email =:email")
     fun getAccountList(email: String): User
 }

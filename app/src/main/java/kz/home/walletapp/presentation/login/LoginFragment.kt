@@ -10,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.cardview.widget.CardView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
@@ -25,6 +26,9 @@ import kz.home.walletapp.R
 import kz.home.walletapp.presentation.accounts.AccountsViewModel
 import kz.home.walletapp.utils.link
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+
+const val EMAIL_KEY = "EMAIL"
+const val PASSWORD_KEY = "PASSWORD"
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
@@ -56,15 +60,20 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 emailInput.error = null
                 val email = emailInput.text.toString().trim()
                 val password = passwordInput.text.toString().trim()
+                accountsViewModel.clear()
+                //accountsViewModel.getUser(email, password)
 
                 lifecycleScope.launch {
                     authViewModel.loginUser(email, password).collect {
                         if (it != null) {
-                            accountsViewModel.getUser(email, password)
-                            accountsViewModel.initialize()
-                            accountsViewModel.count()
+                            //accountsViewModel.getUser(email, password)
+                            //Log.e("", "$email  -  $password")
+                            //accountsViewModel.initialize()
+                            //accountsViewModel.count()
+                            //accountsViewModel.clear()
+                            val bundle = bundleOf(EMAIL_KEY to email, PASSWORD_KEY to password)
                             Navigation.findNavController(view)
-                                .navigate(R.id.action_loginFragment_to_accountsFragment)
+                                .navigate(R.id.action_loginFragment_to_accountsFragment, bundle)
                         } else {
                             Toast.makeText(requireActivity(), "No such user", Toast.LENGTH_SHORT).show()
                         }

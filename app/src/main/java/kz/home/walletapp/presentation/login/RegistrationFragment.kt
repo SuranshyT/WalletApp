@@ -59,17 +59,22 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
     }
 
     private fun checkUser(view: View, e: String, p: String) {
+        var n = 0
         lifecycleScope.launch {
             viewModel.getUsers().collect {
                 if (it != null) {
                     for (i in it.indices) {
                         if (it[i].email == e) {
+                            n +=1
                             Toast.makeText(requireActivity(), "Such user is already registered", Toast.LENGTH_SHORT).show()
-                            break
-                        } else {
+                        }/* else {
                             viewModel.registerUser(e, p)
                             Navigation.findNavController(view).navigate(R.id.action_registrationFragment_to_loginFragment)
-                        }
+                        }*/
+                    }
+                    if (n == 0) {
+                        viewModel.registerUser(e, p)
+                        Navigation.findNavController(view).navigate(R.id.action_registrationFragment_to_loginFragment)
                     }
                 } else {
                     viewModel.registerUser(e, p)
