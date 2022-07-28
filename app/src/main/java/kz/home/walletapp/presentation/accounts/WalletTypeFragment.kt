@@ -2,9 +2,7 @@ package kz.home.walletapp.presentation.accounts
 
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import kz.home.walletapp.R
@@ -15,7 +13,6 @@ class WalletTypeFragment : Fragment(R.layout.fragment_wallet_type) {
 
         val cvBankAccount = view.findViewById<CardView>(R.id.cv_bank_account)
         val cvCryptoAccount = view.findViewById<CardView>(R.id.cv_crypto_account)
-
 
         val bundle = Bundle()
         cvBankAccount.setOnClickListener {

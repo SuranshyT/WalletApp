@@ -23,4 +23,7 @@ class AuthViewModel(
 
     fun loginUser(e: String, p: String) =
         login.findUser(e, p).flowOn(Dispatchers.IO)
+
+    fun getUsers() =
+        register.getAllUsers().flowOn(Dispatchers.IO)
 }

@@ -6,8 +6,10 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import com.google.android.material.textfield.TextInputEditText
+import kotlinx.coroutines.launch
 import kz.home.walletapp.R
 import kz.home.walletapp.utils.link
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -35,8 +37,10 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
                 if(passwordInput.text.toString() == retypePassword.text.toString()) {
                     val email = emailInput.text.toString()
                     val password = passwordInput.text.toString()
-                    viewModel.registerUser(email, password)
-                    Navigation.findNavController(view).navigate(R.id.action_registrationFragment_to_loginFragment)
+
+                    checkUser(view, email, password)
+                    /*viewModel.registerUser(email, password)
+                    Navigation.findNavController(view).navigate(R.id.action_registrationFragment_to_loginFragment)*/
                 }else{
                     emailInput.error = "Passwords are not the same"
                 }
@@ -52,5 +56,26 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
             Pair("Privacy Policy", View.OnClickListener {
                 Toast.makeText(requireActivity(), "Privacy Policy Clicked", Toast.LENGTH_SHORT).show()
             }))
+    }
+
+    private fun checkUser(view: View, e: String, p: String) {
+        lifecycleScope.launch {
+            viewModel.getUsers().collect {
+                if (it != null) {
+                    for (i in it.indices) {
+                        if (it[i].email == e) {
+                            Toast.makeText(requireActivity(), "Such user is already registered", Toast.LENGTH_SHORT).show()
+                            break
+                        } else {
+                            viewModel.registerUser(e, p)
+                            Navigation.findNavController(view).navigate(R.id.action_registrationFragment_to_loginFragment)
+                        }
+                    }
+                } else {
+                    viewModel.registerUser(e, p)
+                    Navigation.findNavController(view).navigate(R.id.action_registrationFragment_to_loginFragment)
+                }
+            }
+        }
     }
 }

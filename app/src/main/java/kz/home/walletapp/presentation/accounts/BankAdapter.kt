@@ -9,9 +9,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import kz.home.walletapp.R
 import kz.home.walletapp.domain.model.Bank
+import java.text.DecimalFormat
 
-class BankAdapter :
-    ListAdapter<Bank, BankAdapter.BankViewHolder>(BankDiffUtilCallback()) {
+class BankAdapter(private val deleteItem: (Bank) -> Unit) :
+    ListAdapter<Bank, BankAdapter.BankViewHolder>(BankDiffUtilCallback()), BankAdapterItemTouchHelper {
 
     inner class BankViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         RecyclerView.ViewHolder(inflater.inflate(R.layout.item_accounts, parent, false)) {
@@ -36,11 +37,17 @@ class BankAdapter :
     override fun onBindViewHolder(holder: BankViewHolder, position: Int) {
         return holder.bind(getItem(position))
     }
+
+    override fun onDismiss(position: Int) {
+        val bank = getItem(position)
+        deleteItem(bank)
+        notifyItemRemoved(position)
+    }
 }
 
 class BankDiffUtilCallback : DiffUtil.ItemCallback<Bank>() {
     override fun areItemsTheSame(oldItem: Bank, newItem: Bank): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem.name == newItem.name
     }
 
     override fun areContentsTheSame(oldItem: Bank, newItem: Bank): Boolean {

@@ -60,7 +60,7 @@ class AddBankAdapter(
 
 class AddBankDiffUtilCallback : DiffUtil.ItemCallback<Bank>() {
     override fun areItemsTheSame(oldItem: Bank, newItem: Bank): Boolean {
-        return oldItem.id == newItem.id
+        return oldItem.name == newItem.name
     }
 
     override fun areContentsTheSame(oldItem: Bank, newItem: Bank): Boolean {

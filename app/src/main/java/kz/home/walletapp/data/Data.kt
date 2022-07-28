@@ -13,18 +13,20 @@ object Data {
     )
 
     val sums = mutableListOf<Sum>(
-        Sum(1, 0.00),
-        Sum(2, 0.00),
-        Sum(3, 0.00)
+        Sum("all", 0.00),
+        Sum("bank", 0.00),
+        Sum("crypto", 0.00)
     )
 
     val bankList = mutableListOf<Bank>(
-        Bank(1, "Jusan Bank", 100000.0, R.drawable.jusan_logo),
-        Bank(2, "Kaspi Bank", 50000.0, R.drawable.kaspi_logo)
+        Bank("Jusan Bank", 0.0, R.drawable.jusan_logo, "bank"),
+        Bank( "Kaspi Bank", 0.0, R.drawable.kaspi_logo, "bank"),
+        Bank("Halyk Bank", 0.0, R.drawable.halyk_logo, "bank"),
+        Bank( "Forte Bank", 0.0, R.drawable.forte_logo, "bank")
     )
 
     val cryptoList = mutableListOf<Bank>(
-        Bank(1, "Ethereum wallet", 80000.0, R.drawable.ethereum_logo),
-        Bank(2, "Bitcoin wallet", 200000.0, R.drawable.bitcoin_logo)
+        Bank("Ethereum wallet", 0.0, R.drawable.ethereum_logo, "crypto"),
+        Bank("Bitcoin wallet", 0.0, R.drawable.bitcoin_logo, "crypto")
     )
 }

@@ -22,12 +22,14 @@ import com.google.android.gms.tasks.Task
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.launch
 import kz.home.walletapp.R
+import kz.home.walletapp.presentation.accounts.AccountsViewModel
 import kz.home.walletapp.utils.link
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
-    private val viewModel: AuthViewModel by sharedViewModel()
+    private val authViewModel: AuthViewModel by sharedViewModel()
+    private val accountsViewModel: AccountsViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -38,23 +40,16 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         val terms = view.findViewById<TextView>(R.id.termsAndPrivacy)
         val googleSignIn = view.findViewById<CardView>(R.id.google_cv)
 
-        // Configure sign-in to request the user's ID, email address, and basic
-        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
             .build()
 
-        // Build a GoogleSignInClient with the options specified by gso.
         val mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso);
 
-        // Check for existing Google Sign In account, if the user is already signed in
-        // the GoogleSignInAccount will be non-null.
         val account = GoogleSignIn.getLastSignedInAccount(requireContext())
         if(account!=null){
             findNavController().navigate(R.id.action_loginFragment_to_accountsFragment)
         }
-        //updateUI(account)
-
 
         loginButton.setOnClickListener {
             if(emailInput.text.toString().isNotBlank() && passwordInput.text.toString().isNotBlank()) {
@@ -63,8 +58,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 val password = passwordInput.text.toString().trim()
 
                 lifecycleScope.launch {
-                    viewModel.loginUser(email, password).collect {
+                    authViewModel.loginUser(email, password).collect {
                         if (it != null) {
+                            accountsViewModel.getUser(email, password)
+                            accountsViewModel.initialize()
+                            accountsViewModel.count()
                             Navigation.findNavController(view)
                                 .navigate(R.id.action_loginFragment_to_accountsFragment)
                         } else {
@@ -89,14 +87,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 val task: Task<GoogleSignInAccount> =
                     GoogleSignIn.getSignedInAccountFromIntent(data)
                 handleSignInResult(task)
-
-                //dosomeop()
             }
         }
 
         googleSignIn.setOnClickListener{
             val signInIntent = mGoogleSignInClient.signInIntent
-            //registerForActivityResult(signInIntent, RC_SIGN_IN)
             resultLauncher.launch(signInIntent)
         }
 
@@ -114,14 +109,9 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         try {
             val account = completedTask.getResult(ApiException::class.java)
 
-            // Signed in successfully, show authenticated UI.
-            //updateUI(account)
             findNavController().navigate(R.id.action_loginFragment_to_accountsFragment)
         } catch (e: ApiException) {
-            // The ApiException status code indicates the detailed failure reason.
-            // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.w("WWW", "signInResult:failed code=" + e.statusCode)
-            //updateUI(null)
         }
     }
 }
