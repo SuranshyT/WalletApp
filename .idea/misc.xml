@@ -17,7 +17,7 @@
         <entry key="..\:/Users/tomir/WalletApp/app/src/main/res/drawable/tab_selector.xml" value="0.197" />
         <entry key="..\:/Users/tomir/WalletApp/app/src/main/res/drawable/transparent_rectangle.xml" value="0.1365" />
         <entry key="..\:/Users/tomir/WalletApp/app/src/main/res/layout/activity_main.xml" value="0.2259963768115942" />
-        <entry key="..\:/Users/tomir/WalletApp/app/src/main/res/layout/fragment_accounts.xml" value="0.36153846153846153" />
+        <entry key="..\:/Users/tomir/WalletApp/app/src/main/res/layout/fragment_accounts.xml" value="0.264" />
         <entry key="..\:/Users/tomir/WalletApp/app/src/main/res/layout/fragment_accounts_slide.xml" value="0.2" />
         <entry key="..\:/Users/tomir/WalletApp/app/src/main/res/layout/fragment_add_transaction_bottomsheet.xml" value="0.24864130434782608" />
         <entry key="..\:/Users/tomir/WalletApp/app/src/main/res/layout/fragment_analytics.xml" value="0.21891891891891893" />
@@ -34,18 +34,9 @@
         <entry key="..\:/Users/tomir/WalletApp/app/src/main/res/layout/item_accounts.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/tomir/WalletApp/app/src/main/res/layout/item_transactions.xml" value="0.24864130434782608" />
         <entry key="..\:/Users/tomir/WalletApp/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.25416666666666665" />
-        <entry key="app/src/main/res/drawable/rectangle_background_12radius.xml" value="0.178" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.18070652173913043" />
-        <entry key="app/src/main/res/layout/activity_splash.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_accounts.xml" value="0.1816123188405797" />
-        <entry key="app/src/main/res/layout/fragment_accounts_slide.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_choose_bank_bottomsheet.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_registration.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.18070652173913043" />
-        <entry key="app/src/main/res/layout/fragment_tabs.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_tutorial.xml" value="0.18070652173913043" />
-        <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.18958333333333333" />
       </map>
     </option>
   </component>

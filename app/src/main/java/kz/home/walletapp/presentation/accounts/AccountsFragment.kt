@@ -20,7 +20,6 @@ class AccountsFragment : Fragment(R.layout.fragment_accounts) {
 
     private lateinit var recyclerViewAdapter: BankAdapter
     private lateinit var viewPagerAdapter: AccountsViewPagerAdapter
-    //private lateinit var adapter: AnotherAdapter
     private val viewModel: AccountsViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -41,7 +40,6 @@ class AccountsFragment : Fragment(R.layout.fragment_accounts) {
         setupRecyclerView(recyclerView)
 
         val addWalletButton = view.findViewById<ConstraintLayout>(R.id.addWalletButton)
-
         addWalletButton.setOnClickListener {
             findNavController().navigate(R.id.action_accountsFragment_to_walletTypeFragment)
         }
@@ -98,7 +96,6 @@ class AccountsFragment : Fragment(R.layout.fragment_accounts) {
         viewPager.adapter = viewPagerAdapter
         viewPager.setCurrentItem(0, true)
 
-        //if (viewModel.getCount() == 1) {
         TabLayoutMediator(tabLayout, viewPager, true) { tab, position ->
             when (position) {
                 0 -> tab.text = "All"
@@ -106,42 +103,5 @@ class AccountsFragment : Fragment(R.layout.fragment_accounts) {
                 2 -> tab.text = "Crypto"
             }
         }.attach()
-
-
-
-
-        /*
-        val labels = listOf("All", "Banks", "Crypto")
-        TabLayoutMediator(tabLayout, viewPager,
-            TabLayoutMediator.TabConfigurationStrategy { tab, position ->
-                tab.text = labels[position]
-            }).attach()*/
-        //}
     }
-
-    /*private fun setupViewPager(
-        viewPager: ViewPager2,
-        tabLayout: TabLayout
-    ) {
-        adapter = AnotherAdapter(this)
-        adapter.setCategories(Data.sums)
-        viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-        viewPager.adapter = adapter
-        viewPager.setCurrentItem(1, false)
-
-        val labels = listOf("All", "Banks", "Crypto")
-
-        TabLayoutMediator(tabLayout, viewPager, true) { tab, position ->
-            when (position) {
-                0 -> tab.text = "All"
-                1 -> tab.text = "Banks"
-                2 -> tab.text = "Crypto"
-            }
-        }.attach()
-
-        *//*TabLayoutMediator(tabLayout, viewPager,
-            TabLayoutMediator.TabConfigurationStrategy { tab, position ->
-                tab.text = labels[position]
-            }).attach()*//*
-    }*/
 }

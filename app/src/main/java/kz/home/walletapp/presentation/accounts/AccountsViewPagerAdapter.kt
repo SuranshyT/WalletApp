@@ -11,7 +11,7 @@ import kz.home.walletapp.domain.model.AccountsSum
 
 class AccountsViewPagerAdapter : RecyclerView.Adapter<AccountsViewPagerViewHolder>() {
     private val accountsSumList = mutableListOf<AccountsSum>()
-    private val diffCallback = SumDiffCallBack()
+    //private val diffCallback = SumDiffCallBack()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountsViewPagerViewHolder =
         AccountsViewPagerViewHolder(parent)
@@ -20,7 +20,7 @@ class AccountsViewPagerAdapter : RecyclerView.Adapter<AccountsViewPagerViewHolde
         holder.bind(accountsSumList[position])
     }
 
-    override fun onBindViewHolder(
+    /*override fun onBindViewHolder(
         holder: AccountsViewPagerViewHolder,
         position: Int,
         payloads: MutableList<Any>
@@ -30,22 +30,16 @@ class AccountsViewPagerAdapter : RecyclerView.Adapter<AccountsViewPagerViewHolde
         } else {
             holder.bind(accountsSumList[position], payloads.first() as? Set<*>)
         }
-    }
+    }*/
 
     override fun getItemCount(): Int = accountsSumList.size
 
-    /*fun setSum(list: List<Sum>){
-        sumList.clear()
-        sumList.addAll(list)
-        notifyDataSetChanged()
-    }*/
-
     fun setSum(list: List<AccountsSum>) {
-        diffCallback.setItems(accountsSumList, list)
-        val diffResult = DiffUtil.calculateDiff(diffCallback, false)
+        //diffCallback.setItems(accountsSumList, list)
+        //val diffResult = DiffUtil.calculateDiff(diffCallback, false)
         accountsSumList.clear()
         accountsSumList.addAll(list)
-        diffResult.dispatchUpdatesTo(this)
+        //diffResult.dispatchUpdatesTo(this)
     }
 }
 
@@ -60,12 +54,12 @@ class AccountsViewPagerViewHolder constructor(itemView: View) : RecyclerView.Vie
         sumTextView.text = item.sum.toString()
     }
 
-    fun bind(item: AccountsSum, fields: Set<*>?) {
+    /*fun bind(item: AccountsSum, fields: Set<*>?) {
         fields?.forEach {
             when (it) {
                 SumPayload.SUM -> sumTextView.text = item.sum.toString()
             }
         }
         sumTextView.text = item.sum.toString()
-    }
+    }*/
 }

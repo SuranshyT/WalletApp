@@ -44,7 +44,7 @@ class AccountsViewModel(
                     allAccounts.addAll(x)
                     _accounts.postValue(allAccounts)
                     Log.e("", "2: ${allAccounts.isEmpty()}")
-                    allAccountSums.clear()
+                    allAccountsSums.clear()
                     allAccountsSums.addAll(calculate())
                     _sums.postValue(allAccountsSums)
                 } else {

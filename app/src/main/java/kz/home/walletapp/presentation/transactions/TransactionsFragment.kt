@@ -3,7 +3,10 @@ package kz.home.walletapp.presentation.transactions
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -34,6 +37,11 @@ class TransactionsFragment : Fragment(R.layout.fragment_transactions) {
 
         setupViewPager(viewPager, tabLayout)
         setupRecyclerView(recyclerView)
+
+        val addButton = view.findViewById<ImageView>(R.id.addButton)
+        addButton.setOnClickListener {
+            findNavController().navigate(R.id.action_transactionsFragment_to_addTransactionBottomSheetFragment)
+        }
 
         recyclerViewAdapter.submitList(Data.transactions)
         viewPagerAdapter.setSum(Data.transactionsSum)

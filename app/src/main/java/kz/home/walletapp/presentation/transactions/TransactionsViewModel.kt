@@ -5,10 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kz.home.walletapp.domain.model.Transaction
 import kz.home.walletapp.domain.model.TransactionsSum
-import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.util.*
 
 class TransactionsViewModel() : ViewModel() {
     private val _transactions = MutableLiveData<List<Transaction>>()
@@ -23,28 +19,22 @@ class TransactionsViewModel() : ViewModel() {
     private lateinit var password: String
 
     private fun calculate(): List<TransactionsSum> {
-        var weekSum1 = 0.0
-        var weekSum2 = 0.0
-        var monthSum1 = 0.0
-        var monthSum2 = 0.0
-        var month3Sum1 = 0.0
-        var month3Sum2 = 0.0
-
-        /*val string = "January 2, 2010";
-        val formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy", Locale.ENGLISH)
-        LocalDate date = LocalDate.parse(string, formatter)
-
-        DateFormat.parse(stringDate)
-        val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(Date())
-
-
+        var weekSumEarned = 0.0
+        var weekSumSpent = 0.0
+        var monthSumEarned = 0.0
+        var monthSumSpent = 0.0
+        var month3SumEarned = 0.0
+        var month3SumSpent = 0.0
 
         //val date = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(Date())*/
         /*val today = Calendar.getInstance()
         today.add(Calendar.DAY_OF_YEAR, -7)
         for (i in allTransactions.indices) {
-            weekSum1 += allTransactions[i].value
-            weekSum2 += allTransactions[i].value
+            //условие неделя
+                //условие type +
+                    weekSumEarned += allTransactions[i].value
+                //условие type -
+                    weekSumSpent += allTransactions[i].value
             if (allTransactions[i].type == "bank") {
                 monthSum1 += allTransactions[i].value
                 monthSum2 += allTransactions[i].value
@@ -54,9 +44,9 @@ class TransactionsViewModel() : ViewModel() {
             }
         }*/
         return listOf(
-            TransactionsSum("week", weekSum1, weekSum2),
-            TransactionsSum("month", monthSum1, monthSum2),
-            TransactionsSum("3month", month3Sum1, month3Sum2)
+            TransactionsSum("week", weekSumEarned, weekSumSpent),
+            TransactionsSum("month", monthSumEarned, monthSumSpent),
+            TransactionsSum("3month", month3SumEarned, month3SumSpent)
         )
     }
 
@@ -64,16 +54,18 @@ class TransactionsViewModel() : ViewModel() {
         allTransactions.add(transaction)
         _transactions.postValue(allTransactions)
 
-        /*allAccountsSums.addAll(calculate())
-        _sums.postValue(allAccountsSums)*/
+        /*allTransactionsSums.clear()
+        allTransactionsSums.addAll(calculate())
+        _sums.postValue(allTransactionsSums)*/
     }
 
     fun deleteTransaction(transaction: Transaction) {
         allTransactions.remove(transaction)
         _transactions.postValue(allTransactions)
 
-        /*allAccountsSums.addAll(calculate())
-        _sums.postValue(allAccountsSums)*/
+        /*allTransactionsSums.clear()
+        allTransactionsSums.addAll(calculate())
+        _sums.postValue(allTransactionsSums)*/
     }
 
     fun getUser(e: String, p: String) {

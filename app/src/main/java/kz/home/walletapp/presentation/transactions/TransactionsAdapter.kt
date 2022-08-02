@@ -1,6 +1,7 @@
 package kz.home.walletapp.presentation.transactions
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -9,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import kz.home.walletapp.R
 import kz.home.walletapp.domain.model.Transaction
 
 class TransactionsAdapter(val context: Context, private val deleteItem: (Transaction) -> Unit) :
@@ -32,8 +34,13 @@ class TransactionsAdapter(val context: Context, private val deleteItem: (Transac
             valueTextView.text = item.value.toString()
             image.setImageResource(item.img)
             signTextView.text = item.type
-            valueTextView.setTextColor(ContextCompat.getColor(context, item.color))
-            signTextView.setTextColor(ContextCompat.getColor(context, item.color))
+            if (item.type == "+") {
+                valueTextView.setTextColor(ContextCompat.getColor(context, R.color.green))
+                signTextView.setTextColor(ContextCompat.getColor(context, R.color.green))
+            } else {
+                valueTextView.setTextColor(ContextCompat.getColor(context, R.color.red))
+                signTextView.setTextColor(ContextCompat.getColor(context, R.color.red))
+            }
         }
     }
 

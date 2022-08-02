@@ -33,18 +33,3 @@ fun TextView.link(vararg links: Pair<String, View.OnClickListener>) {
         LinkMovementMethod.getInstance()
     this.setText(spannableString, TextView.BufferType.SPANNABLE)
 }
-
-fun randomID(): Int {
-    val numbers: MutableList<Int> = mutableListOf()
-    for (i in 0..9) {
-        numbers.add(i)
-    }
-
-    numbers.shuffle()
-
-    var result = ""
-    for (i in 0..3) {
-        result += numbers[i].toString()
-    }
-    return result.toInt()
-}

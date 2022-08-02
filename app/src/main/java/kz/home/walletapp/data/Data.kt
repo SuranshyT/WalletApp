@@ -35,9 +35,9 @@ object Data {
     )
 
     val transactions = mutableListOf<Transaction>(
-        Transaction("01.08.2022", "Cafe", "Jusan Bank", R.drawable.jusan_logo, 5000.0, "-", R.color.red),
-        Transaction("01.08.2022", "Income", "Halyk Bank", R.drawable.halyk_logo, 250000.0, "+", R.color.green),
-        Transaction("31.07.2022", "Taxi", "Jusan Bank", R.drawable.jusan_logo, 1500.0, "-", R.color.red),
-        Transaction("31.07.2022", "Magnum", "Kaspi Bank", R.drawable.kaspi_logo, 10000.0, "-", R.color.red)
+        Transaction("01.08.2022", "Cafe", "Jusan Bank", R.drawable.jusan_logo, 5000.0, "-"),
+        Transaction("01.08.2022", "Income", "Halyk Bank", R.drawable.halyk_logo, 250000.0, "+"),
+        Transaction("31.07.2022", "Taxi", "Jusan Bank", R.drawable.jusan_logo, 1500.0, "-"),
+        Transaction("31.07.2022", "Magnum", "Kaspi Bank", R.drawable.kaspi_logo, 10000.0, "-")
     )
 }
