@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/accounts_graph"
+    app:startDestination="@id/accountsFragment">
+
+    <fragment
+        android:id="@+id/accountsFragment"
+        android:name="kz.home.walletapp.presentation.accounts.AccountsFragment"
+        android:label="AccountsFragment"
+        tools:layout="@layout/fragment_accounts">
+        <action
+            android:id="@+id/action_accountsFragment_to_walletTypeFragment"
+            app:destination="@id/walletTypeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/walletTypeFragment"
+        android:name="kz.home.walletapp.presentation.accounts.WalletTypeFragment"
+        android:label="WalletTypeFragment"
+        tools:layout="@layout/fragment_wallet_type">
+        <action
+            android:id="@+id/action_walletTypeFragment_to_chooseBankBottomSheetFragment"
+            app:destination="@id/chooseBankBottomSheetFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/chooseBankBottomSheetFragment"
+        android:name="kz.home.walletapp.presentation.accounts.ChooseBankBottomSheetFragment"
+        android:label="ChooseBankBottomSheetFragment"
+        tools:layout="@layout/fragment_choose_bank_bottomsheet">
+        <action
+            android:id="@+id/action_chooseBankBottomSheetFragment_to_accountsFragment"
+            app:destination="@id/accountsFragment"/>
+    </dialog>
+</navigation>

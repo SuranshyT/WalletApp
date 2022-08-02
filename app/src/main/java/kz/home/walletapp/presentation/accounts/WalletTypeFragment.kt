@@ -17,12 +17,12 @@ class WalletTypeFragment : Fragment(R.layout.fragment_wallet_type) {
         val bundle = Bundle()
         cvBankAccount.setOnClickListener {
             bundle.putString("type", "bank")
-            findNavController().navigate(R.id.action_walletTypeFragment_to_chooseBankBottomSheetFragment2, bundle)
+            findNavController().navigate(R.id.action_walletTypeFragment_to_chooseBankBottomSheetFragment, bundle)
         }
 
         cvCryptoAccount.setOnClickListener {
             bundle.putString("type", "crypto")
-            findNavController().navigate(R.id.action_walletTypeFragment_to_chooseBankBottomSheetFragment2, bundle)
+            findNavController().navigate(R.id.action_walletTypeFragment_to_chooseBankBottomSheetFragment, bundle)
         }
     }
 }

@@ -48,11 +48,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             .requestEmail()
             .build()
 
-        val mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso);
+        val mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
 
         val account = GoogleSignIn.getLastSignedInAccount(requireContext())
         if(account!=null){
-            findNavController().navigate(R.id.action_loginFragment_to_accountsFragment)
+            findNavController().navigate(R.id.action_loginFragment_to_tabsFragment)
         }
 
         loginButton.setOnClickListener {
@@ -73,7 +73,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                             //accountsViewModel.clear()
                             val bundle = bundleOf(EMAIL_KEY to email, PASSWORD_KEY to password)
                             Navigation.findNavController(view)
-                                .navigate(R.id.action_loginFragment_to_accountsFragment, bundle)
+                                .navigate(R.id.action_loginFragment_to_tabsFragment, bundle)
                         } else {
                             Toast.makeText(requireActivity(), "No such user", Toast.LENGTH_SHORT).show()
                         }
@@ -118,7 +118,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         try {
             val account = completedTask.getResult(ApiException::class.java)
 
-            findNavController().navigate(R.id.action_loginFragment_to_accountsFragment)
+            findNavController().navigate(R.id.action_loginFragment_to_tabsFragment)
         } catch (e: ApiException) {
             Log.w("WWW", "signInResult:failed code=" + e.statusCode)
         }

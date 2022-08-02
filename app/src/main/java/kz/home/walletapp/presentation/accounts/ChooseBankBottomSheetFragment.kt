@@ -64,14 +64,17 @@ class ChooseBankBottomSheetFragment : BottomSheetDialogFragment() {
 
                 builder.setPositiveButton("OK"){
                         dialog, _ ->
-                    bankAccount.value = input.text.toString().toDouble() ?: 0.0
-                    viewModel.addAccount(bankAccount)
-                    dialog.cancel()
-                    dismiss()
-                    viewModel.count()
-                    findNavController().navigate(R.id.action_chooseBankBottomSheetFragment2_to_accountsFragment)
-                    findNavController().popBackStack()
-                    findNavController().popBackStack()
+                    if(input.text.isNotEmpty()) {
+                        bankAccount.value = input.text.toString().toDouble()
+                        viewModel.addAccount(bankAccount)
+                        dialog.cancel()
+                        dismiss()
+                        viewModel.count()
+                        findNavController().navigate(R.id.action_chooseBankBottomSheetFragment_to_accountsFragment)
+
+                    }
+                    //findNavController().popBackStack()
+                    //findNavController().popBackStack()
                 }
 
                 val dialog: AlertDialog = builder.create()
