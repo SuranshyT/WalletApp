@@ -1,13 +1,13 @@
 package kz.home.walletapp.presentation.accounts
 
 import androidx.recyclerview.widget.DiffUtil
-import kz.home.walletapp.domain.model.Sum
+import kz.home.walletapp.domain.model.AccountsSum
 
 class SumDiffCallBack : DiffUtil.Callback() {
-    private var oldList = emptyList<Sum>()
-    private var newList = emptyList<Sum>()
+    private var oldList = emptyList<AccountsSum>()
+    private var newList = emptyList<AccountsSum>()
 
-    fun setItems(oldList: List<Sum>, newList: List<Sum>) {
+    fun setItems(oldList: List<AccountsSum>, newList: List<AccountsSum>) {
         this.oldList = oldList
         this.newList = newList
     }

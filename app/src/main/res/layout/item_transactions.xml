@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="68dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        app:cardCornerRadius="8dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:background="@drawable/jusan_logo"/>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Cafe"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toEndOf="@+id/cv"
+        app:layout_constraintTop_toTopOf="@+id/cv" />
+
+    <TextView
+        android:id="@+id/bank_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Jusan Bank"
+        android:textSize="13sp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toEndOf="@+id/cv"
+        app:layout_constraintTop_toBottomOf="@+id/name_tv" />
+
+    <TextView
+        android:id="@+id/separator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="/"
+        android:layout_marginStart="4dp"
+        app:layout_constraintStart_toEndOf="@+id/bank_tv"
+        app:layout_constraintTop_toTopOf="@+id/bank_tv" />
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="1 August 2022"
+        android:layout_marginStart="4dp"
+        app:layout_constraintStart_toEndOf="@+id/separator"
+        app:layout_constraintTop_toTopOf="@+id/bank_tv" />
+
+    <TextView
+        android:id="@+id/value_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="100.0"
+        android:textSize="18sp"
+        android:layout_marginEnd="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/name_tv"
+        app:layout_constraintBottom_toBottomOf="@+id/bank_tv" />
+
+    <TextView
+        android:id="@+id/sign_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="-"
+        android:textSize="18sp"
+        android:layout_marginEnd="4dp"
+        app:layout_constraintEnd_toStartOf="@+id/value_tv"
+        app:layout_constraintTop_toTopOf="@+id/name_tv"
+        app:layout_constraintBottom_toBottomOf="@+id/bank_tv" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
