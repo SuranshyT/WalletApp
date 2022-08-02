@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/accountsFragment"
+        android:id="@+id/accounts_graph"
         android:enabled="true"
         android:icon="@drawable/accounts_icon"
         android:title="Accounts" />
     <item
-        android:id="@+id/transactionsFragment"
+        android:id="@+id/transactions_graph"
         android:enabled="true"
         android:icon="@drawable/transactions_icon"
         android:title="Transactions" />
     <item
-        android:id="@+id/analyticsFragment"
+        android:id="@+id/analytics_graph"
         android:enabled="true"
         android:icon="@drawable/analytics_icon"
         android:title="Analytics" />
     <item
-        android:id="@+id/moreFragment"
+        android:id="@+id/more_graph"
         android:enabled="true"
         android:icon="@drawable/more_icon"
         android:title="More" />

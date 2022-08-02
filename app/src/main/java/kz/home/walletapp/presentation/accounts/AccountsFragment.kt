@@ -14,8 +14,6 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kz.home.walletapp.R
 import kz.home.walletapp.data.Data
-import kz.home.walletapp.presentation.login.EMAIL_KEY
-import kz.home.walletapp.presentation.login.PASSWORD_KEY
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class AccountsFragment : Fragment(R.layout.fragment_accounts) {
@@ -32,12 +30,12 @@ class AccountsFragment : Fragment(R.layout.fragment_accounts) {
         val tabLayout = view.findViewById<TabLayout>(R.id.tabLayout)
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
 
-        val e = arguments?.getString(EMAIL_KEY)
+        /*val e = arguments?.getString(EMAIL_KEY)
         val p = arguments?.getString(PASSWORD_KEY)
 
         if (e != null && p != null) {
             viewModel.initialize(e, p)
-        }
+        }*/
 
         setupViewPager(viewPager, tabLayout)
         setupRecyclerView(recyclerView)
@@ -50,7 +48,7 @@ class AccountsFragment : Fragment(R.layout.fragment_accounts) {
 
         viewModel.accounts.observe(viewLifecycleOwner){
             recyclerViewAdapter.submitList(it)
-            Log.e("", "${it.toString()} !!!!!!!!!!")
+            Log.e("", "$it !!!!!!!!!!")
             //viewModel.saveAccounts()
         }
 
@@ -101,17 +99,20 @@ class AccountsFragment : Fragment(R.layout.fragment_accounts) {
         viewPager.setCurrentItem(0, true)
 
         //if (viewModel.getCount() == 1) {
-            TabLayoutMediator(tabLayout, viewPager, true) { tab, position ->
-                when (position) {
-                    0 -> tab.text = "All"
-                    1 -> tab.text = "Banks"
-                    2 -> tab.text = "Crypto"
-                }
-            }.attach()
+        TabLayoutMediator(tabLayout, viewPager, true) { tab, position ->
+            when (position) {
+                0 -> tab.text = "All"
+                1 -> tab.text = "Banks"
+                2 -> tab.text = "Crypto"
+            }
+        }.attach()
 
+
+
+
+        /*
         val labels = listOf("All", "Banks", "Crypto")
-
-        /*TabLayoutMediator(tabLayout, viewPager,
+        TabLayoutMediator(tabLayout, viewPager,
             TabLayoutMediator.TabConfigurationStrategy { tab, position ->
                 tab.text = labels[position]
             }).attach()*/

@@ -8,7 +8,4 @@ import kz.home.walletapp.R
 
 class MoreFragment : Fragment(R.layout.fragment_more) {
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
 }

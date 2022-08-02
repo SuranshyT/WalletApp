@@ -44,7 +44,7 @@ class AccountsViewModel(
                     allAccounts.addAll(x)
                     _accounts.postValue(allAccounts)
                     Log.e("", "2: ${allAccounts.isEmpty()}")
-
+                    allAccountSums.clear()
                     allAccountsSums.addAll(calculate())
                     _sums.postValue(allAccountsSums)
                 } else {
@@ -88,7 +88,7 @@ class AccountsViewModel(
             allAccounts.add(bank)
         }
         _accounts.postValue(allAccounts)
-
+        allAccountsSums.clear()
         allAccountsSums.addAll(calculate())
         _sums.postValue(allAccountsSums)
 
@@ -98,7 +98,7 @@ class AccountsViewModel(
     fun deleteAccount(bank: Bank) {
         allAccounts.remove(bank)
         _accounts.postValue(allAccounts)
-
+        allAccountsSums.clear()
         allAccountsSums.addAll(calculate())
         _sums.postValue(allAccountsSums)
 
