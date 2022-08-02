@@ -11,18 +11,18 @@ import kz.home.walletapp.data.Data
 import kz.home.walletapp.data.User
 import kz.home.walletapp.domain.model.AccountsUseCase
 import kz.home.walletapp.domain.model.Bank
-import kz.home.walletapp.domain.model.Sum
+import kz.home.walletapp.domain.model.AccountsSum
 
 class AccountsViewModel(
     private val useCase: AccountsUseCase
 ) : ViewModel() {
     private val _accounts = MutableLiveData<List<Bank>>()
     val accounts: LiveData<List<Bank>> = _accounts
-    private val _sums = MutableLiveData<List<Sum>>()
-    val sums: LiveData<List<Sum>> = _sums
+    private val _sums = MutableLiveData<List<AccountsSum>>()
+    val sums: LiveData<List<AccountsSum>> = _sums
 
     private var allAccounts = mutableListOf<Bank>()
-    private val allSums = mutableListOf<Sum>()
+    private val allAccountsSums = mutableListOf<AccountsSum>()
 
     private lateinit var email: String
     private lateinit var password: String
@@ -44,18 +44,18 @@ class AccountsViewModel(
                     allAccounts.addAll(x)
                     _accounts.postValue(allAccounts)
                     Log.e("", "2: ${allAccounts.isEmpty()}")
-                    allSums.clear()
-                    allSums.addAll(calculate())
-                    _sums.postValue(allSums)
+                    allAccountSums.clear()
+                    allAccountsSums.addAll(calculate())
+                    _sums.postValue(allAccountsSums)
                 } else {
-                    allSums.addAll(Data.sums)
-                    _sums.postValue(allSums)
+                    allAccountsSums.addAll(Data.accountsSums)
+                    _sums.postValue(allAccountsSums)
                 }
             }
         }
     }
 
-    private fun calculate(): List<Sum> {
+    private fun calculate(): List<AccountsSum> {
         var sum1 = 0.0
         var sum2 = 0.0
         var sum3 = 0.0
@@ -68,9 +68,9 @@ class AccountsViewModel(
             }
         }
         return listOf(
-            Sum("all", sum1),
-            Sum("bank", sum2),
-            Sum("crypto", sum3)
+            AccountsSum("all", sum1),
+            AccountsSum("bank", sum2),
+            AccountsSum("crypto", sum3)
         )
     }
 
@@ -88,9 +88,9 @@ class AccountsViewModel(
             allAccounts.add(bank)
         }
         _accounts.postValue(allAccounts)
-        allSums.clear()
-        allSums.addAll(calculate())
-        _sums.postValue(allSums)
+        allAccountsSums.clear()
+        allAccountsSums.addAll(calculate())
+        _sums.postValue(allAccountsSums)
 
         saveAccounts()
     }
@@ -98,9 +98,9 @@ class AccountsViewModel(
     fun deleteAccount(bank: Bank) {
         allAccounts.remove(bank)
         _accounts.postValue(allAccounts)
-        allSums.clear()
-        allSums.addAll(calculate())
-        _sums.postValue(allSums)
+        allAccountsSums.clear()
+        allAccountsSums.addAll(calculate())
+        _sums.postValue(allAccountsSums)
 
         saveAccounts()
     }

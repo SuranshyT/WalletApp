@@ -1,9 +1,8 @@
 package kz.home.walletapp.presentation.accounts
 
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import kz.home.walletapp.domain.model.Sum
+import kz.home.walletapp.domain.model.AccountsSum
 
 class AnotherAdapter(activity: Fragment)
     : FragmentStateAdapter(activity) {
@@ -22,9 +21,9 @@ class AnotherAdapter(activity: Fragment)
     override fun getItemCount(): Int =
         categoryFragmentHolders.size
 
-    fun setCategories(sums: List<Sum>) {
-        if (sums != categoryFragmentHolders.map { it.sums }) {
-            categoryFragmentHolders = sums.map {
+    fun setCategories(accountsSums: List<AccountsSum>) {
+        if (accountsSums != categoryFragmentHolders.map { it.sums }) {
+            categoryFragmentHolders = accountsSums.map {
                 val fragment = XFragment.newInstance(it.sum, it.type)
                 CategoryHolder(fragment, it)
             }
@@ -32,5 +31,5 @@ class AnotherAdapter(activity: Fragment)
         }
     }
 
-    private data class CategoryHolder(val fragment: Fragment, val sums: Sum)
+    private data class CategoryHolder(val fragment: Fragment, val sums: AccountsSum)
 }

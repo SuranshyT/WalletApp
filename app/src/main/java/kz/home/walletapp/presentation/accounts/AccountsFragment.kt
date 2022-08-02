@@ -77,11 +77,6 @@ class AccountsFragment : Fragment(R.layout.fragment_accounts) {
         Log.e("", "OnDestroyView")
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.e("", "OnDestroy")
-    }
-
     private fun setupRecyclerView(recyclerView: RecyclerView?) {
         recyclerViewAdapter = BankAdapter(viewModel::deleteAccount)
         val recyclerViewManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -98,7 +93,7 @@ class AccountsFragment : Fragment(R.layout.fragment_accounts) {
         tabLayout: TabLayout
     ) {
         viewPagerAdapter = AccountsViewPagerAdapter()
-        viewPagerAdapter.setSum(Data.sums)
+        viewPagerAdapter.setSum(Data.accountsSums)
 
         viewPager.adapter = viewPagerAdapter
         viewPager.setCurrentItem(0, true)
