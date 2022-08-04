@@ -23,15 +23,15 @@ object Data {
     )
 
     val bankList = mutableListOf<Bank>(
-        Bank("Jusan Bank", 0.0, R.drawable.jusan_logo, "bank"),
-        Bank( "Kaspi Bank", 0.0, R.drawable.kaspi_logo, "bank"),
-        Bank("Halyk Bank", 0.0, R.drawable.halyk_logo, "bank"),
-        Bank( "Forte Bank", 0.0, R.drawable.forte_logo, "bank")
+        Bank("Jusan Bank", 0.0, R.drawable.jusan_logo, "bank", "Kazakhstan"),
+        Bank( "Kaspi Bank", 0.0, R.drawable.kaspi_logo, "bank", "Kazakhstan"),
+        Bank("Halyk Bank", 0.0, R.drawable.halyk_logo, "bank", "Kazakhstan"),
+        Bank( "Forte Bank", 0.0, R.drawable.forte_logo, "bank", "Kazakhstan")
     )
 
     val cryptoList = mutableListOf<Bank>(
-        Bank("Ethereum wallet", 0.0, R.drawable.ethereum_logo, "crypto"),
-        Bank("Bitcoin wallet", 0.0, R.drawable.bitcoin_logo, "crypto")
+        Bank("Ethereum wallet", 0.0, R.drawable.ethereum_logo, "crypto", "USA"),
+        Bank("Bitcoin wallet", 0.0, R.drawable.bitcoin_logo, "crypto", "USA")
     )
 
     val transactions = mutableListOf<Transaction>(

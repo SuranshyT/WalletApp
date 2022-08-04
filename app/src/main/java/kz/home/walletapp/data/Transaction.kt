@@ -1,22 +1,25 @@
 package kz.home.walletapp.data
 
 import android.os.Parcelable
+import androidx.annotation.DrawableRes
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Account(
+data class Transaction(
+    val date: String,
     val name: String,
+    val bank: String,
+    @DrawableRes val img: Int,
     var value: Double,
-    val img: Int,
-    val type: String,
-    val country: String
+    val type: String
 ) : Parcelable {
     override fun toString(): String =
         """
-            Account(
+            Transaction(
+                date=$date,
                 name=$name,
-                value=$value,
-                type=$type                
+                type=$type,
+                value=$value   
             )
         """.trimIndent()
 }

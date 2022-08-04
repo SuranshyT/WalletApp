@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -55,12 +56,15 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             findNavController().navigate(R.id.action_loginFragment_to_tabsFragment)
         }
 
+        val preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+
+
         loginButton.setOnClickListener {
             if(emailInput.text.toString().isNotBlank() && passwordInput.text.toString().isNotBlank()) {
                 emailInput.error = null
                 val email = emailInput.text.toString().trim()
                 val password = passwordInput.text.toString().trim()
-                accountsViewModel.clear()
+                //accountsViewModel.clear()
                 //accountsViewModel.getUser(email, password)
 
                 lifecycleScope.launch {
@@ -71,9 +75,13 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                             //accountsViewModel.initialize()
                             //accountsViewModel.count()
                             //accountsViewModel.clear()
-                            val bundle = bundleOf(EMAIL_KEY to email, PASSWORD_KEY to password)
+
+                            //val bundle = bundleOf(EMAIL_KEY to email, PASSWORD_KEY to password)
+                            preferences.edit().putString(EMAIL_KEY, email).apply()
+                            preferences.edit().putString(PASSWORD_KEY, password).apply()
+                            accountsViewModel.logIn()
                             Navigation.findNavController(view)
-                                .navigate(R.id.action_loginFragment_to_tabsFragment, bundle)
+                                .navigate(R.id.action_loginFragment_to_tabsFragment)
                         } else {
                             Toast.makeText(requireActivity(), "No such user", Toast.LENGTH_SHORT).show()
                         }
@@ -89,6 +97,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_registrationFragment)
         }
 
+        //GoogleSignIn
+
         val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             result ->
             if (result.resultCode == Activity.RESULT_OK){
@@ -98,6 +108,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 handleSignInResult(task)
             }
         }
+
+
 
         googleSignIn.setOnClickListener{
             val signInIntent = mGoogleSignInClient.signInIntent

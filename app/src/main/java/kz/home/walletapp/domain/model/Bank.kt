@@ -6,5 +6,11 @@ data class Bank(
     val name: String,
     var value: Double,
     @DrawableRes val img: Int,
-    val type: String
-)
+    val type: String,
+    val country: String
+) {
+    override fun toString(): String =
+        """
+            $name - $value KZT
+        """.trimIndent()
+}

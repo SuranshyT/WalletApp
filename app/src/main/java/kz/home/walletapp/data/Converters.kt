@@ -22,4 +22,21 @@ class Converters {
         val gson = Gson()
         return gson.toJson(myObjects)
     }
+
+
+    @TypeConverter
+    fun storedStringToMyTransactions(data: String?): List<Transaction?>? {
+        val gson = Gson()
+        if (data == null) {
+            return Collections.emptyList()
+        }
+        val listType: Type = object : TypeToken<List<Transaction?>?>() {}.type
+        return gson.fromJson(data, listType)
+    }
+
+    @TypeConverter
+    fun myTransactionsToStoredString(myObjects: List<Transaction?>?): String? {
+        val gson = Gson()
+        return gson.toJson(myObjects)
+    }
 }

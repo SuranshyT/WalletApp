@@ -2,7 +2,6 @@ package kz.home.walletapp.data
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import kz.home.walletapp.data.User.Companion.TABLE_NAME
 
@@ -16,7 +15,10 @@ data class User(
     val password: String,
 
     @ColumnInfo(name = COLUMN_ACCOUNTS)
-    var accounts: List<Account>? = null
+    var accounts: List<Account>? = null,
+
+    @ColumnInfo(name = COLUMN_TRANSACTIONS)
+    var transcations: List<Transaction>? = null
 ) {
     override fun toString(): String =
         """
@@ -31,5 +33,6 @@ data class User(
         const val COLUMN_EMAIL = "email"
         const val COLUMN_PASSWORD = "password"
         const val COLUMN_ACCOUNTS = "accounts"
+        const val COLUMN_TRANSACTIONS = "transactions"
     }
 }

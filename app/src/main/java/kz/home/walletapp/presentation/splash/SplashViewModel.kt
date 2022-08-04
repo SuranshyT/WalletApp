@@ -14,4 +14,8 @@ class SplashViewModel : ViewModel() {
     init {
         _isLoggedIn.postValue(false)
     }
+
+    fun setLoggedIn(){
+        _isLoggedIn.postValue(true)
+    }
 }

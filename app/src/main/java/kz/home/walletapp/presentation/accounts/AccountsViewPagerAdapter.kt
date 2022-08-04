@@ -1,5 +1,6 @@
 package kz.home.walletapp.presentation.accounts
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,6 +40,7 @@ class AccountsViewPagerAdapter : RecyclerView.Adapter<AccountsViewPagerViewHolde
         //val diffResult = DiffUtil.calculateDiff(diffCallback, false)
         accountsSumList.clear()
         accountsSumList.addAll(list)
+        notifyDataSetChanged()
         //diffResult.dispatchUpdatesTo(this)
     }
 }

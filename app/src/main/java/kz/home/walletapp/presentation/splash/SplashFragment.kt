@@ -9,8 +9,10 @@ import android.widget.TextView
 import androidx.core.os.HandlerCompat.postDelayed
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.preference.PreferenceManager
 import kz.home.walletapp.R
 import kz.home.walletapp.presentation.MainActivity
+import kz.home.walletapp.presentation.login.EMAIL_KEY
 
 class SplashFragment : Fragment(R.layout.fragment_splash) {
 
@@ -21,6 +23,11 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
         super.onViewCreated(view, savedInstanceState)
 
         renderAnimations()
+
+        val preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        if(preferences?.getString(EMAIL_KEY, "") != ""){
+            viewModel.setLoggedIn()
+        }
         viewModel.isLoggedIn.observe(viewLifecycleOwner){launchMainScreen(it)}
 
     }

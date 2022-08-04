@@ -74,11 +74,13 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
                     }
                     if (n == 0) {
                         viewModel.registerUser(e, p)
-                        Navigation.findNavController(view).navigate(R.id.action_registrationFragment_to_loginFragment)
+                        Navigation.findNavController(view).popBackStack()
+                        //Navigation.findNavController(view).navigate(R.id.action_registrationFragment_to_loginFragment)
                     }
                 } else {
                     viewModel.registerUser(e, p)
-                    Navigation.findNavController(view).navigate(R.id.action_registrationFragment_to_loginFragment)
+                    Navigation.findNavController(view).popBackStack()
+                    //Navigation.findNavController(view).navigate(R.id.action_registrationFragment_to_loginFragment)
                 }
             }
         }
