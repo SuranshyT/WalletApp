@@ -23,22 +23,22 @@
             app:destination="@id/registrationFragment" />
         <action
             android:id="@+id/action_loginFragment_to_tabsFragment"
-            app:destination="@id/tabsFragment" />
+            app:destination="@id/tabsFragment"/>
     </fragment>
     <fragment
         android:id="@+id/registrationFragment"
         android:name="kz.home.walletapp.presentation.login.RegistrationFragment"
         android:label="RegistrationFragment"
-        tools:layout="@layout/fragment_registration">
-        <action
-            android:id="@+id/action_registrationFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_registration"/>
     <fragment
         android:id="@+id/tabsFragment"
         android:name="kz.home.walletapp.presentation.tabs.TabsFragment"
         android:label="TabsFragment"
-        tools:layout="@layout/fragment_tabs"/>
+        tools:layout="@layout/fragment_tabs">
+        <action
+            android:id="@+id/action_tabsFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
     <fragment
         android:id="@+id/welcomeFragment"
         android:name="kz.home.walletapp.presentation.welcome.WelcomeFragment"

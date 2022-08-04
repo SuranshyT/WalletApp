@@ -33,7 +33,7 @@ class AddBankAdapter(
 
         fun bind(item: Bank) {
             nameTextView.text = item.name
-            valueTextView.text = "Kazakhstan"//item.value.toString()
+            valueTextView.text = item.country
             image.setImageResource(item.img)
 
             tvCurrencyAbbr.visibility = View.INVISIBLE

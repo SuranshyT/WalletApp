@@ -1,7 +1,6 @@
 package kz.home.walletapp.presentation.transactions
 
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -11,7 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import kz.home.walletapp.R
-import kz.home.walletapp.domain.model.Transaction
+import kz.home.walletapp.data.Transaction
 
 class TransactionsAdapter(val context: Context, private val deleteItem: (Transaction) -> Unit) :
     ListAdapter<Transaction, TransactionsAdapter.TransactionsViewHolder>(TransactionsDiffUtilCallback()),

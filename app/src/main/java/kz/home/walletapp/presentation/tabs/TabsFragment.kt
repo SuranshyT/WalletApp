@@ -2,10 +2,13 @@ package kz.home.walletapp.presentation.tabs
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavHost
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
+import androidx.preference.PreferenceManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kz.home.walletapp.R
 import kz.home.walletapp.presentation.accounts.AccountsViewModel
@@ -24,11 +27,10 @@ class TabsFragment : Fragment(R.layout.fragment_tabs) {
 
         NavigationUI.setupWithNavController(view.findViewById<BottomNavigationView>(R.id.bottom_nav), navController)
 
-        val e = arguments?.getString(EMAIL_KEY)
-        val p = arguments?.getString(PASSWORD_KEY)
-
-        if (e != null && p != null) {
-            accountsViewModel.initialize(e, p)
+        accountsViewModel.logOutState.observe(viewLifecycleOwner){
+            if(it){
+                findNavController().navigate(R.id.action_tabsFragment_to_loginFragment)
+            }
         }
     }
 }

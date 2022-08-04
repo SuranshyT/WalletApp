@@ -6,6 +6,7 @@ import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +15,8 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kz.home.walletapp.R
 import kz.home.walletapp.data.Data
+import kz.home.walletapp.presentation.login.EMAIL_KEY
+import kz.home.walletapp.presentation.login.PASSWORD_KEY
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class AccountsFragment : Fragment(R.layout.fragment_accounts) {
@@ -35,6 +38,14 @@ class AccountsFragment : Fragment(R.layout.fragment_accounts) {
         if (e != null && p != null) {
             viewModel.initialize(e, p)
         }*/
+
+        val preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+
+        val e = preferences?.getString(EMAIL_KEY, "")
+        val p = preferences?.getString(PASSWORD_KEY, "")
+        if (e != "" && e != null && p != null && p != "") {
+            viewModel.initialize(e, p)
+        }
 
         setupViewPager(viewPager, tabLayout)
         setupRecyclerView(recyclerView)
@@ -91,7 +102,7 @@ class AccountsFragment : Fragment(R.layout.fragment_accounts) {
         tabLayout: TabLayout
     ) {
         viewPagerAdapter = AccountsViewPagerAdapter()
-        viewPagerAdapter.setSum(Data.accountsSums)
+        //viewPagerAdapter.setSum(Data.accountsSums)
 
         viewPager.adapter = viewPagerAdapter
         viewPager.setCurrentItem(0, true)

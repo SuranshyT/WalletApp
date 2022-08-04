@@ -1,12 +1,11 @@
 package kz.home.walletapp.presentation.transactions
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,17 +15,15 @@ import com.google.android.material.tabs.TabLayoutMediator
 import kz.home.walletapp.R
 import kz.home.walletapp.data.Data
 import kz.home.walletapp.presentation.accounts.AccountsViewModel
-import kz.home.walletapp.presentation.accounts.AccountsViewPagerAdapter
-import kz.home.walletapp.presentation.accounts.BankAdapter
-import kz.home.walletapp.presentation.accounts.BankItemTouch
+import kz.home.walletapp.presentation.login.EMAIL_KEY
+import kz.home.walletapp.presentation.login.PASSWORD_KEY
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TransactionsFragment : Fragment(R.layout.fragment_transactions) {
 
     private lateinit var viewPagerAdapter: TransactionsViewPagerAdapter
     private lateinit var recyclerViewAdapter: TransactionsAdapter
-    private val viewModel: TransactionsViewModel by viewModel()
+    private val viewModel: AccountsViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -40,17 +37,26 @@ class TransactionsFragment : Fragment(R.layout.fragment_transactions) {
 
         val addButton = view.findViewById<ImageView>(R.id.addButton)
         addButton.setOnClickListener {
+            //viewModel.addTransaction(Data.transactions[2])
             findNavController().navigate(R.id.action_transactionsFragment_to_addTransactionBottomSheetFragment)
         }
 
-        recyclerViewAdapter.submitList(Data.transactions)
+        val preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+
+        val e = preferences?.getString(EMAIL_KEY, "")
+        val p = preferences?.getString(PASSWORD_KEY, "")
+        if (e != "" && e != null && p != null && p != "") {
+            viewModel.initializeTransactions(e, p)
+        }
+
+        //recyclerViewAdapter.submitList(Data.transactions)
         viewPagerAdapter.setSum(Data.transactionsSum)
 
-        /*viewModel.transactions.observe(viewLifecycleOwner){
+        viewModel.transactions.observe(viewLifecycleOwner){
             recyclerViewAdapter.submitList(it)
-        }*/
+        }
 
-        viewModel.sums.observe(viewLifecycleOwner){
+        viewModel.transactionsSums.observe(viewLifecycleOwner){
             viewPagerAdapter.setSum(it)
         }
     }

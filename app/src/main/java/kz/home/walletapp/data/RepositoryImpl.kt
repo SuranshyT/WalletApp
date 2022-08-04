@@ -24,4 +24,12 @@ class RepositoryImpl(private val db: MyDatabase) {
     fun getAccounts(email: String): Flow<List<Account>?> {
         return flow { emit(db.userDao().getAccountList(email).accounts) }
     }
+
+    suspend fun insertTransactions(user: User, transactions: List<Transaction>) {
+        db.userDao().insertTranscationsList(user, transactions)
+    }
+
+    fun getTransactions(email: String): Flow<List<Transaction>?> {
+        return flow { emit(db.userDao().getTransactionsList(email).transcations) }
+    }
 }
