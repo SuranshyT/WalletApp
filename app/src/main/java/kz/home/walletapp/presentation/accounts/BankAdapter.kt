@@ -41,7 +41,6 @@ class BankAdapter(private val deleteItem: (Bank) -> Unit) :
     override fun onDismiss(position: Int) {
         val bank = getItem(position)
         deleteItem(bank)
-        notifyItemRemoved(position)
     }
 }
 

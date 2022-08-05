@@ -16,6 +16,14 @@ class AccountsUseCase(private val repository: RepositoryImpl) {
         return repository.getAccounts(email)
     }
 
+    suspend fun insertUser(user: User){
+        return repository.insertUser(user)
+    }
+
+    fun getUser(email: String, password: String): User? {
+        return repository.getUser(email, password)
+    }
+
     suspend fun insertTransactions(user: User, transactions: List<Transaction>) {
         repository.insertTransactions(user, transactions)
     }
