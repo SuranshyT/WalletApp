@@ -26,7 +26,6 @@ class AddTransactionBottomSheetFragment : BottomSheetDialogFragment(), DatePicke
 
     private val viewModel: AccountsViewModel by sharedViewModel()
 
-    lateinit var currentDateString: String
     lateinit var chosenDateTV: TextView
 
     override fun onCreateView(
@@ -65,6 +64,8 @@ class AddTransactionBottomSheetFragment : BottomSheetDialogFragment(), DatePicke
         var sign = ""
         chosenDateTV = view.findViewById<TextView>(R.id.tv_chosen_date)
 
+        val currentDate = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(Calendar.getInstance().time)
+        chosenDateTV.text = currentDate
 
         val addButton = view.findViewById<Button>(R.id.add_button)
         addButton.setOnClickListener {
@@ -79,9 +80,11 @@ class AddTransactionBottomSheetFragment : BottomSheetDialogFragment(), DatePicke
                     sign = "-"
                 }
 
-                if(sign == "-" && transactionValue > chosenBank!!.value && transactionValue == 0.0){
+                if(sign == "-" && transactionValue > chosenBank!!.value){
                     Toast.makeText(requireContext(), "Value is exceed amount", Toast.LENGTH_SHORT).show()
-                }else{
+                }else if (transactionValue == 0.0) {
+                    Toast.makeText(requireContext(), "0 is unallowed value", Toast.LENGTH_SHORT).show()
+                } else {
                     viewModel.addTransaction(Transaction(chosenDateTV.text.toString(), transactionName, chosenBank!!.name, chosenBank!!.img, transactionValue, sign))
                     dismiss()
                     findNavController().navigate(R.id.action_addTransactionBottomSheetFragment_to_transactionsFragment)
@@ -107,7 +110,7 @@ class AddTransactionBottomSheetFragment : BottomSheetDialogFragment(), DatePicke
         c.set(Calendar.YEAR, year)
         c.set(Calendar.MONTH, month)
         c.set(Calendar.DAY_OF_MONTH, day)
-        currentDateString = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(c.time)
+        val currentDateString = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(c.time)
         chosenDateTV.text = currentDateString
     }
 

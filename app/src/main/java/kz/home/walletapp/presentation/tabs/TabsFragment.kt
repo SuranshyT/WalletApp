@@ -30,6 +30,7 @@ class TabsFragment : Fragment(R.layout.fragment_tabs) {
         accountsViewModel.logOutState.observe(viewLifecycleOwner){
             if(it){
                 findNavController().navigate(R.id.action_tabsFragment_to_loginFragment)
+                //activity?.viewModelStore?.clear()
             }
         }
     }

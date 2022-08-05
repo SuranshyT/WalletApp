@@ -56,7 +56,6 @@ class TransactionsAdapter(val context: Context, private val deleteItem: (Transac
     override fun onDismiss(position: Int) {
         val transaction = getItem(position)
         deleteItem(transaction)
-        notifyItemRemoved(position)
     }
 }
 

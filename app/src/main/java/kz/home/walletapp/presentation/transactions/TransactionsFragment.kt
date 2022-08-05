@@ -50,10 +50,10 @@ class TransactionsFragment : Fragment(R.layout.fragment_transactions) {
         }
 
         //recyclerViewAdapter.submitList(Data.transactions)
-        viewPagerAdapter.setSum(Data.transactionsSum)
+        //viewPagerAdapter.setSum(Data.transactionsSum)
 
         viewModel.transactions.observe(viewLifecycleOwner){
-            recyclerViewAdapter.submitList(it)
+            recyclerViewAdapter.submitList(it.toMutableList())
         }
 
         viewModel.transactionsSums.observe(viewLifecycleOwner){

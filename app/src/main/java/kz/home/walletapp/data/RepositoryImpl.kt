@@ -13,6 +13,10 @@ class RepositoryImpl(private val db: MyDatabase) {
         return flow { emit(db.userDao().findByEmail(email, password)) }
     }
 
+    fun getUser(email: String, password: String): User? {
+        return db.userDao().findByEmail(email, password)
+    }
+
     fun getAllUsers(): Flow<List<User>?> {
         return flow { emit(db.userDao().getAllUsers()) }
     }
@@ -30,6 +34,6 @@ class RepositoryImpl(private val db: MyDatabase) {
     }
 
     fun getTransactions(email: String): Flow<List<Transaction>?> {
-        return flow { emit(db.userDao().getTransactionsList(email).transcations) }
+        return flow { emit(db.userDao().getTransactionsList(email).transactions) }
     }
 }
