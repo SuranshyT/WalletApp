@@ -12,4 +12,5 @@
     <color name="dialog_background">#91000000</color>
     <color name="red">#FF3B30</color>
     <color name="green">#19B832</color>
+    <color name="line">#1BAAAAAA</color>
 </resources>
