@@ -228,7 +228,7 @@ class AccountsViewModel(
         saveTransactions()
     }
 
-    fun saveAccounts() {
+    private fun saveAccounts() {
         val list = allAccounts.map {
             Account(it.name, it.value, it.img, it.type, it.country)
         }
