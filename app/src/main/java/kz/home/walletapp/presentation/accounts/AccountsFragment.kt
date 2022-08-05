@@ -56,7 +56,8 @@ class AccountsFragment : Fragment(R.layout.fragment_accounts) {
         }
 
         viewModel.accounts.observe(viewLifecycleOwner){
-            recyclerViewAdapter.submitList(it)
+            recyclerViewAdapter.submitList(it.toMutableList())
+            //recyclerViewAdapter.notifyDataSetChanged()
             Log.e("", "$it !!!!!!!!!!")
             //viewModel.saveAccounts()
         }
