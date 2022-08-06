@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -66,15 +67,14 @@ class ChooseBankBottomSheetFragment : BottomSheetDialogFragment() {
                         dialog, _ ->
                     if(input.text.isNotEmpty()) {
                         bankAccount.value = input.text.toString().toDouble()
-                        viewModel.addAccount(bankAccount)
-                        dialog.cancel()
-                        dismiss()
-                        viewModel.count()
-                        findNavController().navigate(R.id.action_chooseBankBottomSheetFragment_to_accountsFragment)
-
+                        if (viewModel.addAccount(bankAccount)) {
+                            dialog.cancel()
+                            dismiss()
+                            findNavController().navigate(R.id.action_chooseBankBottomSheetFragment_to_accountsFragment)
+                        }else {
+                            Toast.makeText(requireActivity(), "This wallet already exists", Toast.LENGTH_SHORT).show()
+                        }
                     }
-                    //findNavController().popBackStack()
-                    //findNavController().popBackStack()
                 }
 
                 val dialog: AlertDialog = builder.create()

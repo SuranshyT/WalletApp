@@ -17,14 +17,14 @@ class TransactionsAdapter(val context: Context, private val deleteItem: (Transac
     TransactionAdapterItemTouchHelper {
 
     inner class TransactionsViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
-        RecyclerView.ViewHolder(inflater.inflate(kz.home.walletapp.R.layout.item_transactions, parent, false)) {
+        RecyclerView.ViewHolder(inflater.inflate(R.layout.item_transactions, parent, false)) {
 
-        private val dateTextView = itemView.findViewById<TextView>(kz.home.walletapp.R.id.date)
-        private val nameTextView = itemView.findViewById<TextView>(kz.home.walletapp.R.id.name_tv)
-        private val bankTextView = itemView.findViewById<TextView>(kz.home.walletapp.R.id.bank_tv)
-        private val valueTextView = itemView.findViewById<TextView>(kz.home.walletapp.R.id.value_tv)
+        private val dateTextView = itemView.findViewById<TextView>(R.id.date)
+        private val nameTextView = itemView.findViewById<TextView>(R.id.name_tv)
+        private val bankTextView = itemView.findViewById<TextView>(R.id.bank_tv)
+        private val valueTextView = itemView.findViewById<TextView>(R.id.value_tv)
         private val image = itemView.findViewById<ImageView>(kz.home.walletapp.R.id.image)
-        private val signTextView = itemView.findViewById<TextView>(kz.home.walletapp.R.id.sign_tv)
+        private val signTextView = itemView.findViewById<TextView>(R.id.sign_tv)
 
         fun bind(item: Transaction) {
             dateTextView.text = item.date

@@ -28,8 +28,7 @@ class TutorialFragment : Fragment(R.layout.fragment_tutorial) {
         viewPager.adapter = adapter
         viewPager.setCurrentItem(0, true)
 
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            //tab.text = adapter.getTitle(position)
+        TabLayoutMediator(tabLayout, viewPager) { _, _ ->
         }.attach()
     }
 }

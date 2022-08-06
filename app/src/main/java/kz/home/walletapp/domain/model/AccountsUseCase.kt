@@ -8,24 +8,12 @@ import kz.home.walletapp.data.User
 
 class AccountsUseCase(private val repository: RepositoryImpl) {
 
-    suspend fun insertAccounts(user: User, accounts: List<Account>) {
-        repository.insertAccounts(user, accounts)
-    }
-
     fun getAccounts(email: String): Flow<List<Account>?> {
         return repository.getAccounts(email)
     }
 
     suspend fun insertUser(user: User){
         return repository.insertUser(user)
-    }
-
-    fun getUser(email: String, password: String): User? {
-        return repository.getUser(email, password)
-    }
-
-    suspend fun insertTransactions(user: User, transactions: List<Transaction>) {
-        repository.insertTransactions(user, transactions)
     }
 
     fun getTransactions(email: String): Flow<List<Transaction>?> {

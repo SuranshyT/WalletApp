@@ -1,14 +1,10 @@
 package kz.home.walletapp.presentation.accounts
 
-import android.media.Image
-import android.opengl.Visibility
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -44,7 +40,6 @@ class AddBankAdapter(
                 onBankClickListener(item)
             }
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BankViewHolder {

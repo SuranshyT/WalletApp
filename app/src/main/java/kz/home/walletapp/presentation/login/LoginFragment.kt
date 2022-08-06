@@ -58,27 +58,18 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
         val preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
 
-
         loginButton.setOnClickListener {
             if(emailInput.text.toString().isNotBlank() && passwordInput.text.toString().isNotBlank()) {
                 emailInput.error = null
                 val email = emailInput.text.toString().trim()
                 val password = passwordInput.text.toString().trim()
-                //accountsViewModel.clear()
-                //accountsViewModel.getUser(email, password)
 
                 lifecycleScope.launch {
                     authViewModel.loginUser(email, password).collect {
                         if (it != null) {
-                            //accountsViewModel.getUser(email, password)
-                            //Log.e("", "$email  -  $password")
-                            //accountsViewModel.initialize()
-                            //accountsViewModel.count()
-                            //accountsViewModel.clear()
-
-                            //val bundle = bundleOf(EMAIL_KEY to email, PASSWORD_KEY to password)
                             preferences.edit().putString(EMAIL_KEY, email).apply()
                             preferences.edit().putString(PASSWORD_KEY, password).apply()
+
                             accountsViewModel.logIn()
                             Navigation.findNavController(view)
                                 .navigate(R.id.action_loginFragment_to_tabsFragment)
@@ -87,7 +78,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                         }
                     }
                 }
-
             }else{
                 emailInput.error = "No login or password"
             }
@@ -96,8 +86,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         registerLink.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_registrationFragment)
         }
-
-        //GoogleSignIn
 
         val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             result ->
@@ -109,13 +97,10 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             }
         }
 
-
-
         googleSignIn.setOnClickListener{
             val signInIntent = mGoogleSignInClient.signInIntent
             resultLauncher.launch(signInIntent)
         }
-
 
         terms.link(
             Pair("Terms", View.OnClickListener {
@@ -129,7 +114,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account = completedTask.getResult(ApiException::class.java)
-
             findNavController().navigate(R.id.action_loginFragment_to_tabsFragment)
         } catch (e: ApiException) {
             Log.w("WWW", "signInResult:failed code=" + e.statusCode)

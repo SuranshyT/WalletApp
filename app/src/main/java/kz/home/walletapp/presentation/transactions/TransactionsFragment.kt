@@ -37,7 +37,6 @@ class TransactionsFragment : Fragment(R.layout.fragment_transactions) {
 
         val addButton = view.findViewById<ImageView>(R.id.addButton)
         addButton.setOnClickListener {
-            //viewModel.addTransaction(Data.transactions[2])
             findNavController().navigate(R.id.action_transactionsFragment_to_addTransactionBottomSheetFragment)
         }
 
@@ -48,9 +47,6 @@ class TransactionsFragment : Fragment(R.layout.fragment_transactions) {
         if (e != "" && e != null && p != null && p != "") {
             viewModel.initializeTransactions(e, p)
         }
-
-        //recyclerViewAdapter.submitList(Data.transactions)
-        //viewPagerAdapter.setSum(Data.transactionsSum)
 
         viewModel.transactions.observe(viewLifecycleOwner){
             recyclerViewAdapter.submitList(it.toMutableList())

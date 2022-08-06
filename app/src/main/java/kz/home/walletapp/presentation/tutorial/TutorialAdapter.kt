@@ -27,8 +27,6 @@ class TutorialAdapter : RecyclerView.Adapter<TutorialViewHolder>() {
         tutorialList.addAll(list)
         notifyDataSetChanged()
     }
-
-
 }
 
 class TutorialViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {

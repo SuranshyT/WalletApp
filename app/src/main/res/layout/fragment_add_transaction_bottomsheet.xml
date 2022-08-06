@@ -13,91 +13,147 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/rectangle_background_12radius"
             android:orientation="vertical"
-            android:paddingHorizontal="20dp"
-            android:background="@drawable/rectangle_background_12radius">
+            android:paddingHorizontal="20dp">
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/text_input_layout_transactions"
+                style="@style/DropDownMenuStyle"
+                app:hintEnabled="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="10dp">
+
                 <AutoCompleteTextView
                     android:id="@+id/actv_chosen_bank"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none"
-                    />
-
+                    android:hint="Choose bank"
+                    android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <RadioGroup
-                android:id="@+id/radio_group"
-                android:layout_width="match_parent"
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:checkedButton="@id/radio_button_minus"
-                android:gravity="center_horizontal">
-                <RadioButton
-                    android:id="@+id/radio_button_plus"
+                app:singleSelection="true"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center"
+                android:id="@+id/toggle_button"
+                app:checkedButton="@id/earned_button1">
+
+                <com.google.android.material.button.MaterialButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="+"
-                    app:useMaterialThemeColors="false"
-                    app:buttonTint="@color/green"/>
-                <RadioButton
-                    android:id="@+id/radio_button_minus"
+                    android:text="Earned"
+                    app:cornerRadius="10dp"
+                    android:textAllCaps="false"
+                    android:id="@+id/earned_button1"
+                    style="?attr/materialButtonOutlinedStyle" />
+
+                <com.google.android.material.button.MaterialButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="-"
-                    app:useMaterialThemeColors="false"
-                    app:buttonTint="@color/red"/>
-            </RadioGroup>
+                    android:text="Spent"
+                    app:cornerRadius="10dp"
+                    android:textAllCaps="false"
+                    android:id="@+id/spent_button2"
+                    style="?attr/materialButtonOutlinedStyle" />
+            </com.google.android.material.button.MaterialButtonToggleGroup>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/transaction_value"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                android:hint="Value"
-                android:layout_marginBottom="10dp"/>
+                android:layout_marginBottom="10dp"
+                style="@style/LoginTextInputLayoutStyle2"
+                app:hintEnabled="false"
+                app:boxBackgroundColor="@color/white">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/transaction_name"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/transaction_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
+                    android:hint="Value"
+                    android:imeOptions="actionDone"
+                    android:inputType="numberDecimal"
+                    android:textSize="18sp"
+                    android:singleLine="true" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text|textCapSentences"
-                android:hint="Description"
-                android:layout_marginBottom="10dp"/>
+                android:layout_marginBottom="20dp"
+                style="@style/LoginTextInputLayoutStyle2"
+                app:hintEnabled="false"
+                app:boxBackgroundColor="@color/white">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/transaction_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
+                    android:hint="Description"
+                    android:imeOptions="actionDone"
+                    android:inputType="text|textCapSentences"
+                    android:textSize="18sp"
+                    android:singleLine="true" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Date:"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:layout_marginEnd="30dp"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_chosen_date"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_chosen_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="Date"
+                    android:textSize="18sp"
+                    android:layout_marginStart="30dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
-                android:id="@+id/tv_chosen_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="date"
-                android:textSize="16sp"
-                android:gravity="center"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_pick_date"
+                android:id="@+id/pick_date_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Pick date"
                 android:layout_gravity="center"
-                android:layout_marginBottom="10dp" />
+                android:layout_marginBottom="20dp"
+                android:textColor="@color/blue"
+                android:textSize="20sp" />
 
             <Button
                 android:id="@+id/add_button"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/button_background"
-                app:backgroundTint="@color/blue"
-                android:text="Добавить"
+                android:text="Add"
                 android:textAllCaps="false"
+                android:textColor="@color/white"
                 android:textSize="17sp"
-                android:textColor="@color/white"/>
+                app:backgroundTint="@color/blue" />
         </LinearLayout>
     </FrameLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

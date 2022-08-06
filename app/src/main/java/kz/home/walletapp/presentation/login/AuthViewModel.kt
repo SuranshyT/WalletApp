@@ -14,10 +14,9 @@ class AuthViewModel(
     private val login: LoginUseCase
 ) : ViewModel() {
 
-    fun registerUser(e: String, p: String) {
-        val insert = User(e, p)
+    fun registerUser(user: User) {
         viewModelScope.launch(Dispatchers.IO) {
-            register.insertUser(insert)
+            register.insertUser(user)
         }
     }
 

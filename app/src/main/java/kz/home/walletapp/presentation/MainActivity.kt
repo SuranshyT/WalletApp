@@ -34,23 +34,6 @@ class MainActivity : AppCompatActivity() {
         navController.graph = graph
 
         activate(navController)
-
-        /*val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
-
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav)
-        bottomNavigationView.setupWithNavController(navController)
-
-        navController.addOnDestinationChangedListener { _, destination: NavDestination, _ ->
-            when (destination.id) {
-                R.id.welcomeFragment -> bottomNavigationView.visibility = View.GONE
-                R.id.loginFragment -> bottomNavigationView.visibility = View.GONE
-                R.id.registrationFragment -> bottomNavigationView.visibility = View.GONE
-                R.id.tutorialFragment -> bottomNavigationView.visibility = View.GONE
-                else -> bottomNavigationView.visibility = View.VISIBLE
-            }
-        }*/
-
     }
 
     private fun activate(navController: NavController) {

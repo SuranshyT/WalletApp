@@ -11,13 +11,8 @@
         android:icon="@drawable/transactions_icon"
         android:title="Transactions" />
     <item
-        android:id="@+id/analytics_graph"
-        android:enabled="true"
-        android:icon="@drawable/analytics_icon"
-        android:title="Analytics" />
-    <item
-        android:id="@+id/more_graph"
+        android:id="@+id/profile_graph"
         android:enabled="true"
         android:icon="@drawable/more_icon"
-        android:title="More" />
+        android:title="Profile" />
 </menu>

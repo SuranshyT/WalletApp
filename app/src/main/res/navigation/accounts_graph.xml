@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_walletTypeFragment_to_chooseBankBottomSheetFragment"
             app:destination="@id/chooseBankBottomSheetFragment" />
+        <action
+            android:id="@+id/action_walletTypeFragment_to_accountsFragment"
+            app:destination="@id/accountsFragment" />
     </fragment>
     <dialog
         android:id="@+id/chooseBankBottomSheetFragment"

@@ -1,6 +1,6 @@
 package kz.home.walletapp.presentation.accounts
 
-import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -10,16 +10,13 @@ import kz.home.walletapp.data.Account
 import kz.home.walletapp.data.Data
 import kz.home.walletapp.data.Transaction
 import kz.home.walletapp.data.User
-import kz.home.walletapp.domain.model.AccountsSum
-import kz.home.walletapp.domain.model.AccountsUseCase
-import kz.home.walletapp.domain.model.Bank
-import kz.home.walletapp.domain.model.TransactionsSum
+import kz.home.walletapp.domain.model.*
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.*
 
 class AccountsViewModel(
-    private val useCase: AccountsUseCase
+    private val useCase: AccountsUseCase,
+    private val login: LoginUseCase
 ) : ViewModel() {
     private val _accounts = MutableLiveData<List<Bank>>()
     val accounts: LiveData<List<Bank>> = _accounts
@@ -39,17 +36,29 @@ class AccountsViewModel(
 
     private lateinit var email: String
     private lateinit var password: String
-    var n = 0
+    private lateinit var firstName: String
+    private lateinit var lastName: String
+    private lateinit var phone: String
 
     private val _logOutState = MutableLiveData<Boolean>()
     val logOutState: LiveData<Boolean> = _logOutState
 
+    fun getUser(e: String, p: String) =
+        login.findUser(e, p).flowOn(Dispatchers.IO)
+
     fun initialize(e: String, p: String) {
         email = e
         password = p
-        //allAccounts.clear()
-        //_accounts.postValue(allAccounts)
-        Log.e("", "1: ${allAccounts.isEmpty()}")
+
+        viewModelScope.launch {
+            getUser(e, p).collect {
+                if (it != null) {
+                    firstName = it.firstName
+                    lastName = it.lastName
+                    phone = it.phone
+                }
+            }
+        }
         viewModelScope.launch {
             getAccounts(e).collect { list ->
                 val x = list?.map {
@@ -59,7 +68,6 @@ class AccountsViewModel(
                 ) {
                     allAccounts.addAll(x)
                     _accounts.postValue(allAccounts)
-                    Log.e("", "2: ${allAccounts.isEmpty()}")
 
                     allAccountsSums.clear()
                     allAccountsSums.addAll(calculate())
@@ -70,7 +78,6 @@ class AccountsViewModel(
                     _sums.postValue(allAccountsSums)
                 } else {
                     allAccountsSums.clear()
-                    //allAccountsSums.addAll(Data.accountsSums)
                     allAccountsSums.addAll(calculate())
                     _sums.postValue(allAccountsSums)
                 }
@@ -81,29 +88,22 @@ class AccountsViewModel(
     fun initializeTransactions(e: String, p: String){
         email = e
         password = p
-        //allAccounts.clear()
-        //_accounts.postValue(allAccounts)
         viewModelScope.launch {
             getTransactions(e).collect { list ->
-                val x = list
-                /*list?.map {
-                    Bank(it.name, it.value, it.img, it.type)
-                }*/
-                if (x != null && allTransactions.isEmpty()
+                if (list != null && allTransactions.isEmpty()
                 ) {
-                    allTransactions.addAll(x)
+                    allTransactions.addAll(list)
                     _transactions.postValue(allTransactions)
 
                     allTransactionsSums.clear()
                     allTransactionsSums.addAll(calculateTransactions())
                     _transactionsSums.postValue(allTransactionsSums)
-                } else if(x == null && allTransactions.isEmpty()){
+                } else if(list == null && allTransactions.isEmpty()){
                     allTransactionsSums.clear()
                     allTransactionsSums.addAll(Data.transactionsSum)
                     _transactionsSums.postValue(allTransactionsSums)
                 } else {
                     allTransactionsSums.clear()
-                    //allAccountsSums.addAll(Data.accountsSums)
                     allTransactionsSums.addAll(calculateTransactions())
                     _transactionsSums.postValue(allTransactionsSums)
                 }
@@ -138,7 +138,6 @@ class AccountsViewModel(
         var month3SumEarned = 0.0
         var month3SumSpent = 0.0
 
-
         allTransactions.forEach {
             val date = Calendar.getInstance()
             date.time = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).parse(it.date) as Date
@@ -171,13 +170,10 @@ class AccountsViewModel(
                         }else{
                             weekSumSpent += it.value
                         }
-
                     }
                 }
             }
-
         }
-
 
         //val date = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(Date())*/
         /*val today = Calendar.getInstance()
@@ -197,7 +193,6 @@ class AccountsViewModel(
             }
         }*/
 
-
         return listOf(
             TransactionsSum("week", weekSumEarned, weekSumSpent),
             TransactionsSum("month", monthSumEarned, monthSumSpent),
@@ -205,51 +200,33 @@ class AccountsViewModel(
         )
     }
 
-    fun addAccount(bank: Bank) {
+    fun addAccount(bank: Bank): Boolean {
         var contains = 0
         for (i in allAccounts.indices) {
             if (allAccounts[i].name == bank.name) {
-                //allAccounts[i].value = bank.value
                 contains = 1
                 break
             }
         }
 
-        if (contains == 0) {
+        return if (contains == 0) {
             val initValue = bank.value
             bank.value = 0.0
             allAccounts.add(bank)
             val currentDate = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(Calendar.getInstance().time)
             addTransaction(Transaction(currentDate, "Initial", bank.name, bank.img, initValue, "+"))
 
-        }
-        _accounts.postValue(allAccounts)
-        updateAccountsSums()
+            _accounts.postValue(allAccounts)
+            updateAccountsSums()
 
-        synchronize()
+            synchronize()
+            true
+        }else {
+            false
+        }
     }
 
     fun addTransaction(transaction: Transaction) {
-        /*allTransactions.add(transaction)
-        _transactions.postValue(allTransactions)*/
-
-        /*
-        var contains = 0
-        for (i in allTransactions.indices) {
-            if (allTransactions[i].name == transaction.name) {
-                allTransactions[i].value = transaction.value
-                contains = 1
-                break
-            }
-        }
-
-        if (contains == 0) {
-            allTransactions.add(transaction)
-        }
-        _transactions.postValue(allTransactions)
-
-         */
-
         allTransactions.add(transaction)
         _transactions.postValue(allTransactions)
 
@@ -290,8 +267,6 @@ class AccountsViewModel(
     }
 
     fun deleteTransaction(transaction: Transaction) {
-        /*allTransactions.remove(transaction)
-        _transactions.postValue(allTransactions)*/
         allTransactions.remove(transaction)
         _transactions.postValue(allTransactions)
         updateTransactionsSums()
@@ -311,15 +286,13 @@ class AccountsViewModel(
         synchronize()
     }
 
-    fun synchronize() {
+    private fun synchronize() {
         val list = allAccounts.map {
             Account(it.name, it.value, it.img, it.type, it.country)
         }
 
-        val user = User(email, password, list, allTransactions)
-        //val user = User(email, password)
+        val user = User(email, password, firstName, lastName, phone, list, allTransactions)
         viewModelScope.launch(Dispatchers.IO) {
-            //val user = useCase.getUser(email, password) ?: User(email = email, password = password, accounts = list)
             useCase.insertUser(user)
         }
     }
@@ -341,37 +314,25 @@ class AccountsViewModel(
         return useCase.getTransactions(e).flowOn(Dispatchers.IO)
     }
 
-    fun getUser(e: String, p: String) {
-        email = e
-        password = p
-    }
-
     fun getMyAccounts(): List<Bank> {
         return allAccounts
     }
 
-    fun count() {
-        n += 1
-    }
-
-    fun getCount() = n
-
-    fun clear() {
+    private fun clear() {
         allAccounts.clear()
         allAccountsSums.clear()
 
         allTransactions.clear()
         allTransactionsSums.clear()
-        //_accounts.postValue(allAccounts)
     }
 
-    fun updateAccountsSums(){
+    private fun updateAccountsSums(){
         allAccountsSums.clear()
         allAccountsSums.addAll(calculate())
         _sums.postValue(allAccountsSums)
     }
 
-    fun updateTransactionsSums(){
+    private fun updateTransactionsSums(){
         allTransactionsSums.clear()
         allTransactionsSums.addAll(calculateTransactions())
         _transactionsSums.postValue(allTransactionsSums)

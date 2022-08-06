@@ -1,7 +1,6 @@
 package kz.home.walletapp.presentation.accounts
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
@@ -14,7 +13,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kz.home.walletapp.R
-import kz.home.walletapp.data.Data
 import kz.home.walletapp.presentation.login.EMAIL_KEY
 import kz.home.walletapp.presentation.login.PASSWORD_KEY
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -32,15 +30,7 @@ class AccountsFragment : Fragment(R.layout.fragment_accounts) {
         val tabLayout = view.findViewById<TabLayout>(R.id.tabLayout)
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
 
-        /*val e = arguments?.getString(EMAIL_KEY)
-        val p = arguments?.getString(PASSWORD_KEY)
-
-        if (e != null && p != null) {
-            viewModel.initialize(e, p)
-        }*/
-
         val preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-
         val e = preferences?.getString(EMAIL_KEY, "")
         val p = preferences?.getString(PASSWORD_KEY, "")
         if (e != "" && e != null && p != null && p != "") {
@@ -57,34 +47,11 @@ class AccountsFragment : Fragment(R.layout.fragment_accounts) {
 
         viewModel.accounts.observe(viewLifecycleOwner){
             recyclerViewAdapter.submitList(it.toMutableList())
-            //recyclerViewAdapter.notifyDataSetChanged()
-            Log.e("", "$it !!!!!!!!!!")
-            //viewModel.saveAccounts()
         }
 
         viewModel.sums.observe(viewLifecycleOwner){
             viewPagerAdapter.setSum(it)
-            //adapter.setCategories(it)
         }
-
-
-        /*view.isFocusableInTouchMode = true
-        view.requestFocus()
-        view.setOnKeyListener(object : View.OnKeyListener {
-            override fun onKey(v: View?, keyCode: Int, event: KeyEvent?): Boolean {
-                return if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    findNavController().popBackStack()
-                    viewModel.clear()
-                    true
-                } else false
-            }
-        })*/
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        //viewModel.clear()
-        Log.e("", "OnDestroyView")
     }
 
     private fun setupRecyclerView(recyclerView: RecyclerView?) {
@@ -103,7 +70,6 @@ class AccountsFragment : Fragment(R.layout.fragment_accounts) {
         tabLayout: TabLayout
     ) {
         viewPagerAdapter = AccountsViewPagerAdapter()
-        //viewPagerAdapter.setSum(Data.accountsSums)
 
         viewPager.adapter = viewPagerAdapter
         viewPager.setCurrentItem(0, true)
