@@ -25,6 +25,7 @@ import com.google.android.gms.tasks.Task
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.coroutines.launch
 import kz.home.walletapp.R
+import kz.home.walletapp.data.User
 import kz.home.walletapp.presentation.accounts.AccountsViewModel
 import kz.home.walletapp.utils.link
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -51,10 +52,10 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             .build()
         val mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
 
-        val account = GoogleSignIn.getLastSignedInAccount(requireContext())
+        /*val account = GoogleSignIn.getLastSignedInAccount(requireContext())
         if(account!=null){
             findNavController().navigate(R.id.action_loginFragment_to_tabsFragment)
-        }
+        }*/
 
         val preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
 
@@ -123,7 +124,25 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account = completedTask.getResult(ApiException::class.java)
-            findNavController().navigate(R.id.action_loginFragment_to_tabsFragment)
+            val user = User(account.email?:"test", account.id?:"959", account.givenName?:"None", account.familyName?:"None")
+
+            val preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+
+            lifecycleScope.launch {
+                authViewModel.loginUser(user.email, user.password).collect {
+                    if (it != null) {
+                        preferences.edit().putString(EMAIL_KEY, user.email).apply()
+                        preferences.edit().putString(PASSWORD_KEY, user.password).apply()
+                        accountsViewModel.logIn()
+                        findNavController().navigate(R.id.action_loginFragment_to_tabsFragment)
+                    } else {
+                        authViewModel.registerUser(user)
+                        handleSignInResult(completedTask)
+                        //Toast.makeText(requireActivity(), "No such user", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+            //findNavController().navigate(R.id.action_loginFragment_to_tabsFragment)
         } catch (e: ApiException) {
             Log.w("WWW", "signInResult:failed code=" + e.statusCode)
         }

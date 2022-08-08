@@ -1,6 +1,7 @@
 package kz.home.walletapp.presentation.tabs
 
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.View
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
@@ -32,5 +33,16 @@ class TabsFragment : Fragment(R.layout.fragment_tabs) {
                 findNavController().navigate(R.id.action_tabsFragment_to_loginFragment)
             }
         }
+
+        view.isFocusableInTouchMode = true
+        view.requestFocus()
+        view.setOnKeyListener(object : View.OnKeyListener {
+            override fun onKey(v: View?, keyCode: Int, event: KeyEvent?): Boolean {
+                return if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    accountsViewModel.logOut()
+                    true
+                } else false
+            }
+        })
     }
 }
