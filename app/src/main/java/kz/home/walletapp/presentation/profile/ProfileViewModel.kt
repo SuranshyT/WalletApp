@@ -3,7 +3,7 @@ package kz.home.walletapp.presentation.profile
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOn
-import kz.home.walletapp.domain.model.LoginUseCase
+import kz.home.walletapp.domain.usecases.LoginUseCase
 
 class ProfileViewModel(
     private val login: LoginUseCase

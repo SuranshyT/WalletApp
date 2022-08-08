@@ -2,6 +2,7 @@ package kz.home.walletapp.presentation.login
 
 import android.app.Activity
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -48,7 +49,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
             .build()
-
         val mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
 
         val account = GoogleSignIn.getLastSignedInAccount(requireContext())
@@ -59,28 +59,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         val preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
 
         loginButton.setOnClickListener {
-            if(emailInput.text.toString().isNotBlank() && passwordInput.text.toString().isNotBlank()) {
-                emailInput.error = null
-                val email = emailInput.text.toString().trim()
-                val password = passwordInput.text.toString().trim()
-
-                lifecycleScope.launch {
-                    authViewModel.loginUser(email, password).collect {
-                        if (it != null) {
-                            preferences.edit().putString(EMAIL_KEY, email).apply()
-                            preferences.edit().putString(PASSWORD_KEY, password).apply()
-
-                            accountsViewModel.logIn()
-                            Navigation.findNavController(view)
-                                .navigate(R.id.action_loginFragment_to_tabsFragment)
-                        } else {
-                            Toast.makeText(requireActivity(), "No such user", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                }
-            }else{
-                emailInput.error = "No login or password"
-            }
+            onLoginClicked(emailInput, passwordInput, preferences, view)
         }
 
         registerLink.setOnClickListener {
@@ -109,6 +88,36 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             Pair("Privacy Policy", View.OnClickListener {
                 Toast.makeText(requireActivity(), "Privacy Policy Clicked", Toast.LENGTH_SHORT).show()
             }))
+    }
+
+    private fun onLoginClicked(
+        emailInput: TextInputEditText,
+        passwordInput: TextInputEditText,
+        preferences: SharedPreferences,
+        view: View
+    ) {
+        if (emailInput.text.toString().isNotBlank() && passwordInput.text.toString().isNotBlank()) {
+            emailInput.error = null
+            val email = emailInput.text.toString().trim()
+            val password = passwordInput.text.toString().trim()
+
+            lifecycleScope.launch {
+                authViewModel.loginUser(email, password).collect {
+                    if (it != null) {
+                        preferences.edit().putString(EMAIL_KEY, email).apply()
+                        preferences.edit().putString(PASSWORD_KEY, password).apply()
+
+                        accountsViewModel.logIn()
+                        Navigation.findNavController(view)
+                            .navigate(R.id.action_loginFragment_to_tabsFragment)
+                    } else {
+                        Toast.makeText(requireActivity(), "No such user", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        } else {
+            emailInput.error = "No login or password"
+        }
     }
 
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {

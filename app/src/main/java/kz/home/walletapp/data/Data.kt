@@ -1,6 +1,7 @@
 package kz.home.walletapp.data
 
 import kz.home.walletapp.R
+import kz.home.walletapp.domain.model.AccountsSum
 import kz.home.walletapp.domain.model.*
 
 object Data {

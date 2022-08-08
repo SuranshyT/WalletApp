@@ -1,9 +1,9 @@
 package kz.home.walletapp.di
 
 import kz.home.walletapp.data.RepositoryImpl
-import kz.home.walletapp.domain.model.AccountsUseCase
-import kz.home.walletapp.domain.model.LoginUseCase
-import kz.home.walletapp.domain.model.RegisterUseCase
+import kz.home.walletapp.domain.usecases.AccountsUseCase
+import kz.home.walletapp.domain.usecases.LoginUseCase
+import kz.home.walletapp.domain.usecases.RegisterUseCase
 import kz.home.walletapp.presentation.accounts.AccountsViewModel
 import kz.home.walletapp.presentation.login.AuthViewModel
 import kz.home.walletapp.presentation.profile.ProfileViewModel

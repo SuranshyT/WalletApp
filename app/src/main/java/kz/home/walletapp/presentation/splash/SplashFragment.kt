@@ -29,7 +29,6 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
             viewModel.setLoggedIn()
         }
         viewModel.isLoggedIn.observe(viewLifecycleOwner){launchMainScreen(it)}
-
     }
 
     private fun launchMainScreen(isSignedIn: Boolean){

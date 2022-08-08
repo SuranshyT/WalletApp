@@ -36,26 +36,31 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
         lastNameInput = view.findViewById(R.id.last_name_input)
 
         registerButton.setOnClickListener {
-            if(emailInput.text.toString().isNotBlank()
-                && passwordInput.text.toString().isNotBlank()
-                && retypePassword.text.toString().isNotBlank()
-                && firstNameInput.text.toString().isNotBlank()
-                && lastNameInput.text.toString().isNotBlank()) {
-                emailInput.error = null
-                if(passwordInput.text.toString() == retypePassword.text.toString()) {
-                    val email = emailInput.text.toString()
-                    val password = passwordInput.text.toString()
-                    val firstName = firstNameInput.text.toString()
-                    val lastName = lastNameInput.text.toString()
+            onRegisterClicked(view)
+        }
+    }
 
-                    val user = User(email, password, firstName, lastName)
-                    checkUser(view, user)
-                }else{
-                    emailInput.error = "Passwords are not the same"
-                }
-            }else{
-                emailInput.error = "Please fill out all fields"
+    private fun onRegisterClicked(view: View) {
+        if (emailInput.text.toString().isNotBlank()
+            && passwordInput.text.toString().isNotBlank()
+            && retypePassword.text.toString().isNotBlank()
+            && firstNameInput.text.toString().isNotBlank()
+            && lastNameInput.text.toString().isNotBlank()
+        ) {
+            emailInput.error = null
+            if (passwordInput.text.toString() == retypePassword.text.toString()) {
+                val email = emailInput.text.toString()
+                val password = passwordInput.text.toString()
+                val firstName = firstNameInput.text.toString()
+                val lastName = lastNameInput.text.toString()
+
+                val user = User(email, password, firstName, lastName)
+                checkUser(view, user)
+            } else {
+                emailInput.error = "Passwords are not the same"
             }
+        } else {
+            emailInput.error = "Please fill out all fields"
         }
     }
 

@@ -30,15 +30,7 @@ class AccountsFragment : Fragment(R.layout.fragment_accounts) {
         val tabLayout = view.findViewById<TabLayout>(R.id.tabLayout)
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
 
-        val preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        val e = preferences?.getString(EMAIL_KEY, "")
-        val p = preferences?.getString(PASSWORD_KEY, "")
-        if (e != "" && e != null && p != null && p != "") {
-            viewModel.initialize(e, p)
-        }
-
-        setupViewPager(viewPager, tabLayout)
-        setupRecyclerView(recyclerView)
+        setupData(viewPager, tabLayout, recyclerView)
 
         val addWalletButton = view.findViewById<ConstraintLayout>(R.id.addWalletButton)
         addWalletButton.setOnClickListener {
@@ -52,6 +44,22 @@ class AccountsFragment : Fragment(R.layout.fragment_accounts) {
         viewModel.sums.observe(viewLifecycleOwner){
             viewPagerAdapter.setSum(it)
         }
+    }
+
+    private fun setupData(
+        viewPager: ViewPager2,
+        tabLayout: TabLayout,
+        recyclerView: RecyclerView?
+    ) {
+        val preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        val email = preferences?.getString(EMAIL_KEY, "")
+        val password = preferences?.getString(PASSWORD_KEY, "")
+        if (email != "" && email != null && password != null && password != "") {
+            viewModel.initialize(email, password)
+        }
+
+        setupViewPager(viewPager, tabLayout)
+        setupRecyclerView(recyclerView)
     }
 
     private fun setupRecyclerView(recyclerView: RecyclerView?) {
@@ -86,7 +94,7 @@ class AccountsFragment : Fragment(R.layout.fragment_accounts) {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 if (tab != null) {
                     when(tab.position){
-                        0 -> viewModel.showAll()
+                        0 -> viewModel.showAllAccounts()
                         1 -> viewModel.showOnlyBanks()
                         2 -> viewModel.showOnlyCrypto()
                     }
@@ -99,8 +107,5 @@ class AccountsFragment : Fragment(R.layout.fragment_accounts) {
             override fun onTabReselected(tab: TabLayout.Tab?) {
             }
         })
-
-
-
     }
 }

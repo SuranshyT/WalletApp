@@ -1,5 +1,6 @@
 package kz.home.walletapp.presentation.transactions
 
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -18,6 +19,7 @@ import kz.home.walletapp.presentation.accounts.AccountsViewModel
 import kz.home.walletapp.presentation.login.EMAIL_KEY
 import kz.home.walletapp.presentation.login.PASSWORD_KEY
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import java.time.LocalDate
 
 class TransactionsFragment : Fragment(R.layout.fragment_transactions) {
 
@@ -42,10 +44,10 @@ class TransactionsFragment : Fragment(R.layout.fragment_transactions) {
 
         val preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
 
-        val e = preferences?.getString(EMAIL_KEY, "")
-        val p = preferences?.getString(PASSWORD_KEY, "")
-        if (e != "" && e != null && p != null && p != "") {
-            viewModel.initializeTransactions(e, p)
+        val email = preferences?.getString(EMAIL_KEY, "")
+        val password = preferences?.getString(PASSWORD_KEY, "")
+        if (email != "" && email != null && password != null && password != "") {
+            viewModel.initializeTransactions(email, password)
         }
 
         viewModel.transactions.observe(viewLifecycleOwner){
@@ -74,6 +76,24 @@ class TransactionsFragment : Fragment(R.layout.fragment_transactions) {
                 2 -> tab.text = "3 months"
             }
         }.attach()
+
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                if (tab != null) {
+                    when(tab.position){
+                        0 -> viewModel.showWeek()
+                        1 -> viewModel.showMonth()
+                        2 -> viewModel.show3Month()
+                    }
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+        })
     }
 
     private fun setupRecyclerView(recyclerView: RecyclerView?) {

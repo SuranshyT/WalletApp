@@ -6,8 +6,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import kz.home.walletapp.data.User
-import kz.home.walletapp.domain.model.LoginUseCase
-import kz.home.walletapp.domain.model.RegisterUseCase
+import kz.home.walletapp.domain.usecases.LoginUseCase
+import kz.home.walletapp.domain.usecases.RegisterUseCase
 
 class AuthViewModel(
     private val register: RegisterUseCase,

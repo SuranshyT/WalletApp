@@ -1,4 +1,4 @@
-package kz.home.walletapp.domain.model
+package kz.home.walletapp.domain.usecases
 
 import kotlinx.coroutines.flow.Flow
 import kz.home.walletapp.data.RepositoryImpl

@@ -9,6 +9,9 @@ import kz.home.walletapp.data.Account
 import kz.home.walletapp.data.Data
 import kz.home.walletapp.data.Transaction
 import kz.home.walletapp.data.User
+import kz.home.walletapp.domain.model.AccountsSum
+import kz.home.walletapp.domain.usecases.AccountsUseCase
+import kz.home.walletapp.domain.usecases.LoginUseCase
 import kz.home.walletapp.domain.model.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -19,8 +22,8 @@ class AccountsViewModel(
 ) : ViewModel() {
     private val _accounts = MutableLiveData<List<Bank>>()
     val accounts: LiveData<List<Bank>> = _accounts
-    private val _sums = MutableLiveData<List<AccountsSum>>()
-    val sums: LiveData<List<AccountsSum>> = _sums
+    private val _accountsSums = MutableLiveData<List<AccountsSum>>()
+    val sums: LiveData<List<AccountsSum>> = _accountsSums
 
     private val _transactions = MutableLiveData<List<Transaction>>()
     val transactions: LiveData<List<Transaction>> = _transactions
@@ -41,7 +44,7 @@ class AccountsViewModel(
     private val _logOutState = MutableLiveData<Boolean>()
     val logOutState: LiveData<Boolean> = _logOutState
 
-    fun getUser(e: String, p: String) =
+    private fun getUser(e: String, p: String) =
         login.findUser(e, p).flowOn(Dispatchers.IO)
 
     fun initialize(e: String, p: String) {
@@ -56,46 +59,45 @@ class AccountsViewModel(
                 }
             }
         }
+
         viewModelScope.launch {
             getAccounts(e).collect { list ->
-                val x = list?.map {
+                val walletsList = list?.map {
                     Bank(it.name, it.value, it.img, it.type, it.country)
                 }
-                if (x != null && allAccounts.isEmpty()
-                ) {
-                    allAccounts.addAll(x)
+                if (walletsList != null && allAccounts.isEmpty()) {
+                    allAccounts.addAll(walletsList)
                     _accounts.postValue(allAccounts)
 
                     allAccountsSums.clear()
                     allAccountsSums.addAll(calculate())
-                    _sums.postValue(allAccountsSums)
-                } else if(x == null && allAccounts.isEmpty()){
+                    _accountsSums.postValue(allAccountsSums)
+                } else if (walletsList == null && allAccounts.isEmpty()) {
                     allAccountsSums.clear()
                     allAccountsSums.addAll(Data.accountsSums)
-                    _sums.postValue(allAccountsSums)
+                    _accountsSums.postValue(allAccountsSums)
                 } else {
                     allAccountsSums.clear()
                     allAccountsSums.addAll(calculate())
-                    _sums.postValue(allAccountsSums)
+                    _accountsSums.postValue(allAccountsSums)
                 }
             }
         }
     }
 
-    fun initializeTransactions(e: String, p: String){
+    fun initializeTransactions(e: String, p: String) {
         email = e
         password = p
         viewModelScope.launch {
             getTransactions(e).collect { list ->
-                if (list != null && allTransactions.isEmpty()
-                ) {
+                if (list != null && allTransactions.isEmpty()) {
                     allTransactions.addAll(list)
                     _transactions.postValue(allTransactions)
 
                     allTransactionsSums.clear()
                     allTransactionsSums.addAll(calculateTransactions())
                     _transactionsSums.postValue(allTransactionsSums)
-                } else if(list == null && allTransactions.isEmpty()){
+                } else if (list == null && allTransactions.isEmpty()) {
                     allTransactionsSums.clear()
                     allTransactionsSums.addAll(Data.transactionsSum)
                     _transactionsSums.postValue(allTransactionsSums)
@@ -116,7 +118,7 @@ class AccountsViewModel(
             sum1 += allAccounts[i].value
             if (allAccounts[i].type == "bank") {
                 sum2 += allAccounts[i].value
-            } else if (allAccounts[i].type == "crypto"){
+            } else if (allAccounts[i].type == "crypto") {
                 sum3 += allAccounts[i].value
             }
         }
@@ -149,46 +151,28 @@ class AccountsViewModel(
             val month3Ago = Calendar.getInstance()
             month3Ago.add(Calendar.MONTH, -3)
 
-            if(date.compareTo(today) <= 0 && date.compareTo(month3Ago) >= 0 ){
-                if(it.type == "+"){
+            if (date.compareTo(today) <= 0 && date.compareTo(month3Ago) >= 0) {
+                if (it.type == "+") {
                     month3SumEarned += it.value
-                }else{
+                } else {
                     month3SumSpent += it.value
                 }
-                if(date.compareTo(today) <= 0 && date.compareTo(monthAgo) >= 0 ){
-                    if(it.type == "+"){
+                if (date.compareTo(today) <= 0 && date.compareTo(monthAgo) >= 0) {
+                    if (it.type == "+") {
                         monthSumEarned += it.value
-                    }else{
+                    } else {
                         monthSumSpent += it.value
                     }
-                    if(date.compareTo(today) <= 0 && date.compareTo(weekAgo) >= 0 ){
-                        if(it.type == "+"){
+                    if (date.compareTo(today) <= 0 && date.compareTo(weekAgo) >= 0) {
+                        if (it.type == "+") {
                             weekSumEarned += it.value
-                        }else{
+                        } else {
                             weekSumSpent += it.value
                         }
                     }
                 }
             }
         }
-
-        //val date = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(Date())*/
-        /*val today = Calendar.getInstance()
-        today.add(Calendar.DAY_OF_YEAR, -7)
-        for (i in allTransactions.indices) {
-            //условие неделя
-                //условие type +
-                    weekSumEarned += allTransactions[i].value
-                //условие type -
-                    weekSumSpent += allTransactions[i].value
-            if (allTransactions[i].type == "bank") {
-                monthSum1 += allTransactions[i].value
-                monthSum2 += allTransactions[i].value
-            } else if (allTransactions[i].type == "crypto"){
-                month3Sum1 += allTransactions[i].value
-                month3Sum2 += allTransactions[i].value
-            }
-        }*/
 
         return listOf(
             TransactionsSum("week", weekSumEarned, weekSumSpent),
@@ -197,7 +181,7 @@ class AccountsViewModel(
         )
     }
 
-    fun addAccount(bank: Bank): Boolean {
+    fun contains(bank: Bank): Boolean {
         var contains = 0
         for (i in allAccounts.indices) {
             if (allAccounts[i].name == bank.name) {
@@ -205,24 +189,21 @@ class AccountsViewModel(
                 break
             }
         }
+        return contains == 0
+    }
 
-        return if (contains == 0) {
-            val initValue = bank.value
-            bank.value = 0.0
-            allAccounts.add(bank)
-            _accounts.postValue(allAccounts)
+    fun addAccount(bank: Bank) {
+        val initValue = bank.value
+        bank.value = 0.0
+        allAccounts.add(bank)
+        _accounts.postValue(allAccounts)
 
-            initializeTransactions(email, password)
-            val currentDate = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(Calendar.getInstance().time)
-            addTransaction(Transaction(currentDate, "Initial", bank.name, bank.img, initValue, "+"))
+        initializeTransactions(email, password)
+        val currentDate =
+            SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(Calendar.getInstance().time)
+        addTransaction(Transaction(currentDate, "Initial", bank.name, bank.img, initValue, "+"))
 
-            //updateAccountsSums()
-
-            synchronize()
-            true
-        }else {
-            false
-        }
+        synchronize()
     }
 
     fun addTransaction(transaction: Transaction) {
@@ -232,10 +213,10 @@ class AccountsViewModel(
         updateTransactionsSums()
 
         allAccounts.forEach {
-            if(it.name == transaction.bank){
-                if(transaction.type == "-"){
+            if (it.name == transaction.bank) {
+                if (transaction.type == "-") {
                     it.value -= transaction.value
-                }else {
+                } else {
                     it.value += transaction.value
                 }
             }
@@ -249,7 +230,7 @@ class AccountsViewModel(
     fun deleteAccount(bank: Bank) {
         val transactionListToDelete = mutableListOf<Transaction>()
         allTransactions.forEach {
-            if(it.bank == bank.name){
+            if (it.bank == bank.name) {
                 transactionListToDelete.add(it)
             }
         }
@@ -270,10 +251,10 @@ class AccountsViewModel(
         updateTransactionsSums()
 
         allAccounts.forEach {
-            if(it.name == transaction.bank){
-                if(transaction.type == "-"){
+            if (it.name == transaction.bank) {
+                if (transaction.type == "-") {
                     it.value += transaction.value
-                }else {
+                } else {
                     it.value -= transaction.value
                 }
             }
@@ -315,36 +296,75 @@ class AccountsViewModel(
         allTransactionsSums.clear()
     }
 
-    private fun updateAccountsSums(){
+    private fun updateAccountsSums() {
         allAccountsSums.clear()
         allAccountsSums.addAll(calculate())
-        _sums.postValue(allAccountsSums)
+        _accountsSums.postValue(allAccountsSums)
     }
 
-    private fun updateTransactionsSums(){
+    private fun updateTransactionsSums() {
         allTransactionsSums.clear()
         allTransactionsSums.addAll(calculateTransactions())
         _transactionsSums.postValue(allTransactionsSums)
     }
 
-    fun logOut(){
+    fun logOut() {
         clear()
         _logOutState.postValue(true)
     }
 
-    fun logIn(){
+    fun logIn() {
         _logOutState.postValue(false)
     }
 
-    fun showOnlyBanks(){
-        _accounts.postValue(allAccounts.filter {it.type == "bank"})
+    fun showOnlyBanks() {
+        _accounts.postValue(allAccounts.filter { it.type == "bank" })
     }
 
-    fun showOnlyCrypto(){
-        _accounts.postValue(allAccounts.filter {it.type == "crypto"})
+    fun showOnlyCrypto() {
+        _accounts.postValue(allAccounts.filter { it.type == "crypto" })
     }
 
-    fun showAll(){
+    fun showAllAccounts() {
         _accounts.postValue(allAccounts)
+    }
+
+    fun showWeek() {
+        _transactions.postValue(allTransactions.filter { getDate(it, "week") })
+    }
+
+    fun showMonth() {
+        _transactions.postValue(allTransactions.filter { getDate(it, "month") })
+    }
+
+    fun show3Month() {
+        _transactions.postValue(allTransactions.filter { getDate(it, "3month") })
+    }
+
+    private fun getDate(transaction: Transaction, case: String): Boolean {
+        val date = Calendar.getInstance()
+        date.time = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).parse(transaction.date) as Date
+
+        val today = Calendar.getInstance()
+        val weekAgo = Calendar.getInstance()
+        weekAgo.add(Calendar.DAY_OF_MONTH, -7)
+
+        val monthAgo = Calendar.getInstance()
+        monthAgo.add(Calendar.MONTH, -1)
+
+        val month3Ago = Calendar.getInstance()
+        month3Ago.add(Calendar.MONTH, -3)
+
+        return when (case) {
+            "week" -> {
+                date.compareTo(today) <= 0 && date.compareTo(weekAgo) >= 0
+            }
+            "month" -> {
+                date.compareTo(today) <= 0 && date.compareTo(monthAgo) >= 0
+            }
+            else -> {
+                date.compareTo(today) <= 0 && date.compareTo(month3Ago) >= 0
+            }
+        }
     }
 }

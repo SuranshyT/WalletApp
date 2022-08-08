@@ -22,7 +22,6 @@ import java.util.*
 class AddTransactionBottomSheetFragment : BottomSheetDialogFragment(), DatePickerDialog.OnDateSetListener {
 
     private val viewModel: AccountsViewModel by sharedViewModel()
-
     lateinit var chosenDateTV: TextView
 
     override fun onCreateView(
@@ -40,7 +39,6 @@ class AddTransactionBottomSheetFragment : BottomSheetDialogFragment(), DatePicke
         val accounts: List<Bank> = viewModel.getMyAccounts()
 
         val adapter = ArrayAdapter(requireContext(), R.layout.list_item, accounts)
-
         val autoCompleteTextView = view.findViewById<AutoCompleteTextView>(R.id.actv_chosen_bank)
         autoCompleteTextView.setAdapter(adapter)
 
@@ -66,30 +64,57 @@ class AddTransactionBottomSheetFragment : BottomSheetDialogFragment(), DatePicke
 
         val addButton = view.findViewById<Button>(R.id.add_button)
         addButton.setOnClickListener {
-            if(chosenBank != null && transactionNameEditText.text.isNotBlank() && transactionValueEditText.text.isNotEmpty() && chosenDateTV.text.toString() != "date"){
-                val transactionName = transactionNameEditText.text.toString()
-                val transactionValue = transactionValueEditText.text.toString().toDouble()
-                val checkedId = toggleButton.checkedButtonId
+            onAddClicked(
+                chosenBank,
+                transactionNameEditText,
+                transactionValueEditText,
+                toggleButton,
+                sign
+            )
+        }
+    }
 
-                if(checkedId == R.id.earned_button1){
-                    sign = "+"
-                }else if (checkedId == R.id.spent_button2){
-                    sign = "-"
-                }
+    private fun onAddClicked(
+        chosenBank: Bank?,
+        transactionNameEditText: EditText,
+        transactionValueEditText: EditText,
+        toggleButton: MaterialButtonToggleGroup,
+        sign: String
+    ) {
+        var sign1 = sign
+        if (chosenBank != null && transactionNameEditText.text.isNotBlank() && transactionValueEditText.text.isNotEmpty() && chosenDateTV.text.toString() != "date") {
+            val transactionName = transactionNameEditText.text.toString()
+            val transactionValue = transactionValueEditText.text.toString().toDouble()
+            val checkedId = toggleButton.checkedButtonId
 
-                if(sign == "-" && transactionValue > chosenBank!!.value){
-                    Toast.makeText(requireContext(), "Value is exceed amount", Toast.LENGTH_SHORT).show()
-                }else if (transactionValue == 0.0) {
-                    Toast.makeText(requireContext(), "0 is unallowed value", Toast.LENGTH_SHORT).show()
-                } else {
-                    viewModel.addTransaction(Transaction(chosenDateTV.text.toString(), transactionName, chosenBank!!.name, chosenBank!!.img, transactionValue, sign))
-                    dismiss()
-                    findNavController().navigate(R.id.action_addTransactionBottomSheetFragment_to_transactionsFragment)
-                }
-
-            } else {
-                Toast.makeText(requireContext(), "Enter all fields", Toast.LENGTH_SHORT).show()
+            if (checkedId == R.id.earned_button1) {
+                sign1 = "+"
+            } else if (checkedId == R.id.spent_button2) {
+                sign1 = "-"
             }
+
+            if (sign1 == "-" && transactionValue > chosenBank.value) {
+                Toast.makeText(requireContext(), "Value is exceed amount", Toast.LENGTH_SHORT)
+                    .show()
+            } else if (transactionValue == 0.0) {
+                Toast.makeText(requireContext(), "0 is not allowed value", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                viewModel.addTransaction(
+                    Transaction(
+                        chosenDateTV.text.toString(),
+                        transactionName,
+                        chosenBank.name,
+                        chosenBank.img,
+                        transactionValue,
+                        sign1
+                    )
+                )
+                dismiss()
+                findNavController().navigate(R.id.action_addTransactionBottomSheetFragment_to_transactionsFragment)
+            }
+        } else {
+            Toast.makeText(requireContext(), "Enter all fields", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -106,5 +131,4 @@ class AddTransactionBottomSheetFragment : BottomSheetDialogFragment(), DatePicke
         val currentDateString = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(c.time)
         chosenDateTV.text = currentDateString
     }
-
 }

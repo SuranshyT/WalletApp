@@ -54,39 +54,46 @@ class ChooseBankBottomSheetFragment : BottomSheetDialogFragment() {
     private fun setupRecyclerView(recyclerView: RecyclerView) {
         recyclerViewAdapter = AddBankAdapter(
             onBankClickListener = { bank ->
-                val bankAccount: Bank = bank
-                val builder = MaterialAlertDialogBuilder(requireActivity(), R.style.MaterialAlertDialog_rounded)
-
-                builder.setTitle("Enter amount:")
-
-                val input = EditText(context)
-                input.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
-                builder.setView(input)
-
-                builder.setPositiveButton("OK"){
-                        dialog, _ ->
-                    if(input.text.isNotEmpty()) {
-                        bankAccount.value = input.text.toString().toDouble()
-                        if (viewModel.addAccount(bankAccount)) {
-                            dialog.cancel()
-                            dismiss()
-                            findNavController().navigate(R.id.action_chooseBankBottomSheetFragment_to_accountsFragment)
-                        }else {
-                            Toast.makeText(requireActivity(), "This wallet already exists", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                }
-
-                val dialog: AlertDialog = builder.create()
-                dialog.show()
+                onClicked(bank)
             }
         )
 
         val recyclerViewManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-
         recyclerView.apply {
             adapter = recyclerViewAdapter
             layoutManager = recyclerViewManager
         }
+    }
+
+    private fun onClicked(bank: Bank) {
+        val bankAccount: Bank = bank
+        val builder =
+            MaterialAlertDialogBuilder(requireActivity(), R.style.MaterialAlertDialog_rounded)
+        builder.setTitle("Enter amount:")
+
+        val input = EditText(context)
+        input.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_FLAG_DECIMAL
+        builder.setView(input)
+
+        builder.setPositiveButton("OK") { dialog, _ ->
+            if (input.text.isNotEmpty()) {
+                if (viewModel.contains(bankAccount)) {
+                    bankAccount.value = input.text.toString().toDouble()
+                    viewModel.addAccount(bankAccount)
+                    dialog.cancel()
+                    dismiss()
+                    findNavController().navigate(R.id.action_chooseBankBottomSheetFragment_to_accountsFragment)
+                } else {
+                    Toast.makeText(
+                        requireActivity(),
+                        "This wallet already exists",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
     }
 }
