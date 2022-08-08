@@ -81,5 +81,26 @@ class AccountsFragment : Fragment(R.layout.fragment_accounts) {
                 2 -> tab.text = "Crypto"
             }
         }.attach()
+
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                if (tab != null) {
+                    when(tab.position){
+                        0 -> viewModel.showAll()
+                        1 -> viewModel.showOnlyBanks()
+                        2 -> viewModel.showOnlyCrypto()
+                    }
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+        })
+
+
+
     }
 }

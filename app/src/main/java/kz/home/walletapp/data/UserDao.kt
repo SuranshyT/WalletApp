@@ -17,22 +17,8 @@ interface UserDao {
     @Query("SELECT * FROM $USER_TABLE_NAME")
     fun getAllUsers(): List<User>?
 
-    @androidx.room.Transaction
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAccountList(user: User, accounts: List<Account>) {
-        user.accounts = accounts
-        insertUser(user)
-    }
-
     @Query("SELECT * FROM $USER_TABLE_NAME WHERE email =:email")
     fun getAccountList(email: String): User
-
-    @androidx.room.Transaction
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTranscationsList(user: User, transactions: List<Transaction>) {
-        user.transactions = transactions
-        insertUser(user)
-    }
 
     @Query("SELECT * FROM $USER_TABLE_NAME WHERE email =:email")
     fun getTransactionsList(email: String): User

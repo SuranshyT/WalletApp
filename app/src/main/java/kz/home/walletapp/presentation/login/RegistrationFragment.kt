@@ -23,7 +23,6 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
     private lateinit var retypePassword: TextInputEditText
     private lateinit var firstNameInput: TextInputEditText
     private lateinit var lastNameInput: TextInputEditText
-    private lateinit var phoneInput: TextInputEditText
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,24 +34,21 @@ class RegistrationFragment : Fragment(R.layout.fragment_registration) {
         retypePassword = view.findViewById(R.id.password_repeat_input)
         firstNameInput = view.findViewById(R.id.first_name_input)
         lastNameInput = view.findViewById(R.id.last_name_input)
-        phoneInput = view.findViewById(R.id.phone_input)
 
         registerButton.setOnClickListener {
             if(emailInput.text.toString().isNotBlank()
                 && passwordInput.text.toString().isNotBlank()
                 && retypePassword.text.toString().isNotBlank()
                 && firstNameInput.text.toString().isNotBlank()
-                && lastNameInput.text.toString().isNotBlank()
-                && phoneInput.text.toString().isNotBlank()) {
+                && lastNameInput.text.toString().isNotBlank()) {
                 emailInput.error = null
                 if(passwordInput.text.toString() == retypePassword.text.toString()) {
                     val email = emailInput.text.toString()
                     val password = passwordInput.text.toString()
                     val firstName = firstNameInput.text.toString()
                     val lastName = lastNameInput.text.toString()
-                    val phone = phoneInput.text.toString()
 
-                    val user = User(email, password, firstName, lastName, phone)
+                    val user = User(email, password, firstName, lastName)
                     checkUser(view, user)
                 }else{
                     emailInput.error = "Passwords are not the same"

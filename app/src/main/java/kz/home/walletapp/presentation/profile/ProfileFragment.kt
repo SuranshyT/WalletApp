@@ -33,7 +33,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         val firstNameTv = view.findViewById<TextView>(R.id.first_name_tv)
         val lastNameTv = view.findViewById<TextView>(R.id.last_name_tv)
         val emailTv = view.findViewById<TextView>(R.id.email_tv)
-        val phoneTv = view.findViewById<TextView>(R.id.phone_tv)
+        val rankTv = view.findViewById<TextView>(R.id.rank_tv)
 
         lifecycleScope.launch {
             if (email != null && password != null) {
@@ -43,7 +43,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                             firstNameTv.text = it.firstName
                             lastNameTv.text = it.lastName
                             emailTv.text = it.email
-                            phoneTv.text = it.phone
                         }
                     }
                 }

@@ -1,6 +1,5 @@
 package kz.home.walletapp.presentation.accounts
 
-import android.widget.Toast
 import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -38,7 +37,6 @@ class AccountsViewModel(
     private lateinit var password: String
     private lateinit var firstName: String
     private lateinit var lastName: String
-    private lateinit var phone: String
 
     private val _logOutState = MutableLiveData<Boolean>()
     val logOutState: LiveData<Boolean> = _logOutState
@@ -55,7 +53,6 @@ class AccountsViewModel(
                 if (it != null) {
                     firstName = it.firstName
                     lastName = it.lastName
-                    phone = it.phone
                 }
             }
         }
@@ -213,11 +210,13 @@ class AccountsViewModel(
             val initValue = bank.value
             bank.value = 0.0
             allAccounts.add(bank)
+            _accounts.postValue(allAccounts)
+
+            initializeTransactions(email, password)
             val currentDate = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(Calendar.getInstance().time)
             addTransaction(Transaction(currentDate, "Initial", bank.name, bank.img, initValue, "+"))
 
-            _accounts.postValue(allAccounts)
-            updateAccountsSums()
+            //updateAccountsSums()
 
             synchronize()
             true
@@ -230,9 +229,7 @@ class AccountsViewModel(
         allTransactions.add(transaction)
         _transactions.postValue(allTransactions)
 
-        allTransactionsSums.clear()
-        allTransactionsSums.addAll(calculateTransactions())
-        _transactionsSums.postValue(allTransactionsSums)
+        updateTransactionsSums()
 
         allAccounts.forEach {
             if(it.name == transaction.bank){
@@ -245,6 +242,7 @@ class AccountsViewModel(
         }
 
         _accounts.postValue(allAccounts)
+        updateAccountsSums()
         synchronize()
     }
 
@@ -291,20 +289,11 @@ class AccountsViewModel(
             Account(it.name, it.value, it.img, it.type, it.country)
         }
 
-        val user = User(email, password, firstName, lastName, phone, list, allTransactions)
+        val user = User(email, password, firstName, lastName, list, allTransactions)
         viewModelScope.launch(Dispatchers.IO) {
             useCase.insertUser(user)
         }
     }
-
-    /*fun saveTransactions() {
-        val list = allTransactions
-        //val user = User(email, password)
-        viewModelScope.launch(Dispatchers.IO) {
-            val user = useCase.getUser(email, password) ?: User(email = email, password = password, transactions = list)
-            useCase.insertTransactions(user, list)
-        }
-    }*/
 
     private fun getAccounts(e: String): Flow<List<Account>?> {
         return useCase.getAccounts(e).flowOn(Dispatchers.IO)
@@ -345,5 +334,17 @@ class AccountsViewModel(
 
     fun logIn(){
         _logOutState.postValue(false)
+    }
+
+    fun showOnlyBanks(){
+        _accounts.postValue(allAccounts.filter {it.type == "bank"})
+    }
+
+    fun showOnlyCrypto(){
+        _accounts.postValue(allAccounts.filter {it.type == "crypto"})
+    }
+
+    fun showAll(){
+        _accounts.postValue(allAccounts)
     }
 }

@@ -77,7 +77,7 @@
                     android:paddingTop="12dp"
                     android:paddingBottom="12dp"
                     android:hint="Value"
-                    android:imeOptions="actionDone"
+                    android:imeOptions="actionNext"
                     android:inputType="numberDecimal"
                     android:textSize="18sp"
                     android:singleLine="true" />

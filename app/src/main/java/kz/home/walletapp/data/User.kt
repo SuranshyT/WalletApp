@@ -20,9 +20,6 @@ data class User(
     @ColumnInfo(name = COLUMN_LAST_NAME)
     val lastName: String,
 
-    @ColumnInfo(name = COLUMN_PHONE)
-    val phone: String,
-
     @ColumnInfo(name = COLUMN_ACCOUNTS)
     var accounts: List<Account>? = null,
 
@@ -43,7 +40,6 @@ data class User(
         const val COLUMN_PASSWORD = "password"
         const val COLUMN_FIRST_NAME = "firstName"
         const val COLUMN_LAST_NAME = "lastName"
-        const val COLUMN_PHONE = "phone"
         const val COLUMN_ACCOUNTS = "accounts"
         const val COLUMN_TRANSACTIONS = "transactions"
     }
