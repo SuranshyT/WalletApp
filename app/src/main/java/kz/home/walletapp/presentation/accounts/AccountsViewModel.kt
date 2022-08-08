@@ -208,7 +208,6 @@ class AccountsViewModel(
 
     fun addTransaction(transaction: Transaction) {
         allTransactions.add(transaction)
-        _transactions.postValue(allTransactions)
 
         updateTransactionsSums()
 
