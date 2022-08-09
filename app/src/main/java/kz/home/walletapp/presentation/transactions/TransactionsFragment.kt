@@ -42,16 +42,8 @@ class TransactionsFragment : Fragment(R.layout.fragment_transactions) {
             findNavController().navigate(R.id.action_transactionsFragment_to_addTransactionBottomSheetFragment)
         }
 
-        val preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-
-        val email = preferences?.getString(EMAIL_KEY, "")
-        val password = preferences?.getString(PASSWORD_KEY, "")
-        if (email != "" && email != null && password != null && password != "") {
-            viewModel.initializeTransactions(email, password)
-        }
-
         viewModel.transactions.observe(viewLifecycleOwner){
-            recyclerViewAdapter.submitList(it.toMutableList())
+            recyclerViewAdapter.submitList(it.sortedBy { transaction ->  transaction.date }.toMutableList())
         }
 
         viewModel.transactionsSums.observe(viewLifecycleOwner){
@@ -74,6 +66,7 @@ class TransactionsFragment : Fragment(R.layout.fragment_transactions) {
                 0 -> tab.text = "7 days"
                 1 -> tab.text = "1 month"
                 2 -> tab.text = "3 months"
+                3 -> tab.text = "All"
             }
         }.attach()
 
@@ -84,6 +77,7 @@ class TransactionsFragment : Fragment(R.layout.fragment_transactions) {
                         0 -> viewModel.showWeek()
                         1 -> viewModel.showMonth()
                         2 -> viewModel.show3Month()
+                        3 -> viewModel.showAllTransactions()
                     }
                 }
             }

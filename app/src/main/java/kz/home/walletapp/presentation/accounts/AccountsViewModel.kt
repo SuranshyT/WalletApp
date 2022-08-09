@@ -1,6 +1,5 @@
 package kz.home.walletapp.presentation.accounts
 
-import android.text.method.TextKeyListener.clear
 import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -14,7 +13,6 @@ import kz.home.walletapp.domain.model.AccountsSum
 import kz.home.walletapp.domain.usecases.AccountsUseCase
 import kz.home.walletapp.domain.usecases.LoginUseCase
 import kz.home.walletapp.domain.model.*
-import java.text.SimpleDateFormat
 import java.util.*
 
 class AccountsViewModel(
@@ -137,10 +135,12 @@ class AccountsViewModel(
         var monthSumSpent = 0.0
         var month3SumEarned = 0.0
         var month3SumSpent = 0.0
+        var totalSumEarned = 0.0
+        var totalSumSpent = 0.0
 
         allTransactions.forEach {
             val date = Calendar.getInstance()
-            date.time = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).parse(it.date) as Date
+            date.time = it.date//SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).parse(it.date) as Date
 
             val today = Calendar.getInstance()
             val weekAgo = Calendar.getInstance()
@@ -152,19 +152,19 @@ class AccountsViewModel(
             val month3Ago = Calendar.getInstance()
             month3Ago.add(Calendar.MONTH, -3)
 
-            if (date.compareTo(today) <= 0 && date.compareTo(month3Ago) >= 0) {
+            if (date in month3Ago..today) {
                 if (it.type == "+") {
                     month3SumEarned += it.value
                 } else {
                     month3SumSpent += it.value
                 }
-                if (date.compareTo(today) <= 0 && date.compareTo(monthAgo) >= 0) {
+                if (date in monthAgo..today) {
                     if (it.type == "+") {
                         monthSumEarned += it.value
                     } else {
                         monthSumSpent += it.value
                     }
-                    if (date.compareTo(today) <= 0 && date.compareTo(weekAgo) >= 0) {
+                    if (date in weekAgo..today) {
                         if (it.type == "+") {
                             weekSumEarned += it.value
                         } else {
@@ -173,12 +173,21 @@ class AccountsViewModel(
                     }
                 }
             }
+
+            if (it.type == "+") {
+                totalSumEarned += it.value
+            } else {
+                totalSumSpent += it.value
+            }
+
+
         }
 
         return listOf(
             TransactionsSum("week", weekSumEarned, weekSumSpent),
             TransactionsSum("month", monthSumEarned, monthSumSpent),
-            TransactionsSum("3month", month3SumEarned, month3SumSpent)
+            TransactionsSum("3month", month3SumEarned, month3SumSpent),
+            TransactionsSum("all", totalSumEarned, totalSumSpent)
         )
     }
 
@@ -200,8 +209,11 @@ class AccountsViewModel(
         _accounts.postValue(allAccounts)
 
         initializeTransactions(email, password)
-        val currentDate =
-            SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(Calendar.getInstance().time)
+
+        val month5Ago = Calendar.getInstance()
+        month5Ago.add(Calendar.MONTH, -5)
+
+        val currentDate = month5Ago.time
         addTransaction(Transaction(currentDate, "Initial", bank.name, bank.img, initValue, "+"))
 
         synchronize()
@@ -343,9 +355,14 @@ class AccountsViewModel(
         _transactions.postValue(allTransactions.filter { getDate(it, "3month") })
     }
 
+    fun showAllTransactions(){
+        _transactions.postValue(allTransactions)
+    }
+
     private fun getDate(transaction: Transaction, case: String): Boolean {
         val date = Calendar.getInstance()
-        date.time = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).parse(transaction.date) as Date
+
+        date.time = transaction.date
 
         val today = Calendar.getInstance()
         val weekAgo = Calendar.getInstance()
@@ -359,13 +376,13 @@ class AccountsViewModel(
 
         return when (case) {
             "week" -> {
-                date.compareTo(today) <= 0 && date.compareTo(weekAgo) >= 0
+                date in weekAgo..today
             }
             "month" -> {
-                date.compareTo(today) <= 0 && date.compareTo(monthAgo) >= 0
+                date in monthAgo..today
             }
             else -> {
-                date.compareTo(today) <= 0 && date.compareTo(month3Ago) >= 0
+                date in month3Ago..today
             }
         }
     }

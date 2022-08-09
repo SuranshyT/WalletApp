@@ -23,6 +23,7 @@ class AddTransactionBottomSheetFragment : BottomSheetDialogFragment(), DatePicke
 
     private val viewModel: AccountsViewModel by sharedViewModel()
     lateinit var chosenDateTV: TextView
+    var date: Date = Calendar.getInstance().time
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -102,7 +103,8 @@ class AddTransactionBottomSheetFragment : BottomSheetDialogFragment(), DatePicke
             } else {
                 viewModel.addTransaction(
                     Transaction(
-                        chosenDateTV.text.toString(),
+                        //chosenDateTV.text.toString(),
+                        date,
                         transactionName,
                         chosenBank.name,
                         chosenBank.img,
@@ -128,6 +130,7 @@ class AddTransactionBottomSheetFragment : BottomSheetDialogFragment(), DatePicke
         c.set(Calendar.YEAR, year)
         c.set(Calendar.MONTH, month)
         c.set(Calendar.DAY_OF_MONTH, day)
+        date = c.time
         val currentDateString = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(c.time)
         chosenDateTV.text = currentDateString
     }

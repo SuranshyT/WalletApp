@@ -20,8 +20,9 @@ object Data {
     val transactionsSum = mutableListOf(
         TransactionsSum("week", 0.00, 0.00),
         TransactionsSum("month", 0.00, 0.00),
-        TransactionsSum("3month", 0.00, 0.00)
-    )
+        TransactionsSum("3month", 0.00, 0.00),
+        TransactionsSum("all", 0.00, 0.00)
+        )
 
     val bankList = mutableListOf(
         Bank("Jusan Bank", 0.0, R.drawable.jusan_logo, "bank", "Kazakhstan"),
@@ -35,10 +36,10 @@ object Data {
         Bank("Bitcoin wallet", 0.0, R.drawable.bitcoin_logo, "crypto", "USA")
     )
 
-    val transactions = mutableListOf(
+    /*val transactions = mutableListOf(
         Transaction("01.08.2022", "Cafe", "Jusan Bank", R.drawable.jusan_logo, 5000.0, "-"),
         Transaction("01.08.2022", "Income", "Halyk Bank", R.drawable.halyk_logo, 250000.0, "+"),
         Transaction("31.07.2022", "Taxi", "Jusan Bank", R.drawable.jusan_logo, 1500.0, "-"),
         Transaction("31.07.2022", "Magnum", "Kaspi Bank", R.drawable.kaspi_logo, 10000.0, "-")
-    )
+    )*/
 }

@@ -3,9 +3,7 @@ package kz.home.walletapp.presentation.tabs
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavHost
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
@@ -19,6 +17,17 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class TabsFragment : Fragment(R.layout.fragment_tabs) {
     private val accountsViewModel: AccountsViewModel by sharedViewModel()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        val email = preferences?.getString(EMAIL_KEY, "")
+        val password = preferences?.getString(PASSWORD_KEY, "")
+        if (email != "" && email != null && password != null && password != "") {
+            accountsViewModel.initialize(email, password)
+            accountsViewModel.initializeTransactions(email, password)
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

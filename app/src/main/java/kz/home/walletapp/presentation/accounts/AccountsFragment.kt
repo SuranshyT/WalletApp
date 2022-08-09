@@ -5,7 +5,6 @@ import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,8 +12,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kz.home.walletapp.R
-import kz.home.walletapp.presentation.login.EMAIL_KEY
-import kz.home.walletapp.presentation.login.PASSWORD_KEY
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class AccountsFragment : Fragment(R.layout.fragment_accounts) {
@@ -30,7 +27,8 @@ class AccountsFragment : Fragment(R.layout.fragment_accounts) {
         val tabLayout = view.findViewById<TabLayout>(R.id.tabLayout)
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
 
-        setupData(viewPager, tabLayout, recyclerView)
+        setupViewPager(viewPager, tabLayout)
+        setupRecyclerView(recyclerView)
 
         val addWalletButton = view.findViewById<ConstraintLayout>(R.id.addWalletButton)
         addWalletButton.setOnClickListener {
@@ -44,22 +42,6 @@ class AccountsFragment : Fragment(R.layout.fragment_accounts) {
         viewModel.sums.observe(viewLifecycleOwner){
             viewPagerAdapter.setSum(it)
         }
-    }
-
-    private fun setupData(
-        viewPager: ViewPager2,
-        tabLayout: TabLayout,
-        recyclerView: RecyclerView?
-    ) {
-        val preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        val email = preferences?.getString(EMAIL_KEY, "")
-        val password = preferences?.getString(PASSWORD_KEY, "")
-        if (email != "" && email != null && password != null && password != "") {
-            viewModel.initialize(email, password)
-        }
-
-        setupViewPager(viewPager, tabLayout)
-        setupRecyclerView(recyclerView)
     }
 
     private fun setupRecyclerView(recyclerView: RecyclerView?) {

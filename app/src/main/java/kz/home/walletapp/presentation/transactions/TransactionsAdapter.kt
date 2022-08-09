@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import kz.home.walletapp.R
 import kz.home.walletapp.data.Transaction
+import java.text.SimpleDateFormat
+import java.util.*
 
 class TransactionsAdapter(val context: Context, private val deleteItem: (Transaction) -> Unit) :
     ListAdapter<Transaction, TransactionsAdapter.TransactionsViewHolder>(TransactionsDiffUtilCallback()),
@@ -27,7 +29,7 @@ class TransactionsAdapter(val context: Context, private val deleteItem: (Transac
         private val signTextView = itemView.findViewById<TextView>(R.id.sign_tv)
 
         fun bind(item: Transaction) {
-            dateTextView.text = item.date
+            dateTextView.text = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(item.date.time)//item.date
             nameTextView.text = item.name
             bankTextView.text = item.bank
             valueTextView.text = item.value.toString()
