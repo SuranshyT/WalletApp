@@ -112,7 +112,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                         Navigation.findNavController(view)
                             .navigate(R.id.action_loginFragment_to_tabsFragment)
                     } else {
-                        Toast.makeText(requireActivity(), "No such user", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireActivity(), "No such user or wrong password", Toast.LENGTH_SHORT).show()
                     }
                 }
             }

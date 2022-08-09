@@ -1,5 +1,6 @@
 package kz.home.walletapp.presentation.accounts
 
+import android.text.method.TextKeyListener.clear
 import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -92,7 +93,7 @@ class AccountsViewModel(
             getTransactions(e).collect { list ->
                 if (list != null && allTransactions.isEmpty()) {
                     allTransactions.addAll(list)
-                    _transactions.postValue(allTransactions)
+                    //_transactions.postValue(allTransactions)
 
                     allTransactionsSums.clear()
                     allTransactionsSums.addAll(calculateTransactions())
@@ -246,7 +247,7 @@ class AccountsViewModel(
 
     fun deleteTransaction(transaction: Transaction) {
         allTransactions.remove(transaction)
-        _transactions.postValue(allTransactions)
+        //_transactions.postValue(allTransactions)
         updateTransactionsSums()
 
         allAccounts.forEach {
@@ -287,14 +288,6 @@ class AccountsViewModel(
         return allAccounts
     }
 
-    private fun clear() {
-        allAccounts.clear()
-        allAccountsSums.clear()
-
-        allTransactions.clear()
-        allTransactionsSums.clear()
-    }
-
     private fun updateAccountsSums() {
         allAccountsSums.clear()
         allAccountsSums.addAll(calculate())
@@ -305,6 +298,16 @@ class AccountsViewModel(
         allTransactionsSums.clear()
         allTransactionsSums.addAll(calculateTransactions())
         _transactionsSums.postValue(allTransactionsSums)
+    }
+
+    private fun clear() {
+        allAccounts.clear()
+        _accounts.postValue(allAccounts)
+        allAccountsSums.clear()
+
+        allTransactions.clear()
+        _transactions.postValue(allTransactions)
+        allTransactionsSums.clear()
     }
 
     fun logOut() {
